@@ -11,7 +11,7 @@ RSpec::Matchers.define :map_port do |host, container|
   description do
     msg = "map container port #{container} to host port #{host}"
     msg << %( using the "#{@protocol}" protocol) if @protocol
-    msg << %( in "#{@mode}" ) if @mode
+    msg << %( in "#{@mode}" mode) if @mode
     msg
   end
   failure_message do |actual|

@@ -19,6 +19,7 @@ RSpec.describe docker_container('consul') do
   # TODO: Label Matcher
 end
 
+#Get container by name
 RSpec.describe docker_container('haproxy') do
   it { should exist }
   it { should be_running }
@@ -28,6 +29,10 @@ RSpec.describe docker_container('haproxy') do
   it { should have_mount('/var/run/docker.sock', '/var/run/docker.sock') }
 end
 
+#get conatiner by filter
+RSpec.describe docker_container('Name=vagrant_rabbit') do
+  it { should exist }
+end
 
 RSpec.describe docker_service('jenkins_jenkins') do
   it { should exist }
@@ -45,3 +50,4 @@ RSpec.describe docker_service('jenkins_jenkins') do
   it { should have_mount('/tmp', '/dir') }
   # TODO: Label Matcher
 end
+

@@ -117,7 +117,7 @@ module Serverspec::Type
     private
 
     def get_inspection
-      @containers ||= @runner.run_command("docker ps -qa -f Name=#{@name}").stdout
+      @containers ||=  @name.include?('=') ? @runner.run_command("docker ps -qa -f #{@name}").stdout : @name
       @get_inspection ||= @runner.run_command("docker inspect #{@containers}")
     end
   end

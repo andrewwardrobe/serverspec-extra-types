@@ -51,35 +51,35 @@ describe docker_container('publish=80') do
 end
 ```
 
-#####be_running
+##### be_running
 Check if a container is runnig (from serverspec)
 ```ruby
 describe docker_container('focused_curie') do
   it { should be_running }
 end
 ```
-#####have_image
+##### have_image
 Check if container is running a spefic image
 ```ruby
 describe docker_container('focused_currie') do
   it { should have_image('jenkins/jenkins:lts') }
 end
 ```
-#####have_hostname / has_host_name
+##### have_hostname / has_host_name
 Check container hostname
 ```ruby
 describe docker_container('focused_currie') do
   it { should have_hostname('container1') }
 end
 ```
-#####have_domainname / have_domain_name
+##### have_domainname / have_domain_name
 Check container domain name
 ```ruby
 describe docker_container('focused_currie') do
   it { should have_domainname('leek.com') }
 end
 ```
-#####have_user / run_as_user
+##### have_user / run_as_user
 Check if container is running as the specified user
 ```ruby
 describe docker_container('focused_currie') do
@@ -87,7 +87,7 @@ describe docker_container('focused_currie') do
 end
 ```
 
-#####map_port
+##### map_port
 Check if host port is mapped to container port
 ```ruby
 describe docker_container('focused_currie') do
@@ -100,42 +100,42 @@ describe docker_container('focused_currie') do
   it { should map_port('80','8080').using_protocol('tcp') }
 end
 ```
-#####have_volume
+##### have_volume
 Check the for a volume (from serverspec)
 ```ruby
 describe docker_container('focused_currie') do
   it {  it { should have_volume('/tmp','/data') }}
 end
 ```
-#####have_mount
+##### have_mount
 Check the for mounted volume
 ```ruby
 describe docker_container('focused_currie') do
   it { should have_mount('/var/run/docker.sock', '/var/run/docker.sock') }
 end
 ```
-#####have_restart_policy
+##### have_restart_policy
 Check the containers restart policy
 ```ruby
 describe docker_container('focused_currie') do
   it { should have_restart_policy('always') }
 end
 ```
-#####have_restart_limit
+##### have_restart_limit
 Check the containers restart limit
 ```ruby
 describe docker_container('focused_currie') do
   it { should have_restart_limit(1) }
 end
 ```
-#####have_host
+##### have_host
 Check for additional /etc/hosts entries
 ```ruby
 describe docker_container('focused_currie') do
   it { should have_host('8.8.8.8 dns') }
 end
 ```
-#####have_environment_variable
+##### have_environment_variable
 Check if the container has an specific environment variable
 ```ruby
 describe docker_container('focused_currie') do
@@ -147,7 +147,7 @@ describe docker_container('focused_currie') do
 end
 ```
 
-#####be_privileged
+##### be_privileged
 Check if the container runs in privileged mode
 ```ruby
 describe docker_container('focused_currie') do
@@ -155,7 +155,7 @@ describe docker_container('focused_currie') do
 end
 ```
 
-#####publishes_all_ports
+##### publishes_all_ports
 Check if the container publishes all exposed ports
 ```ruby
 describe docker_container('focused_currie') do

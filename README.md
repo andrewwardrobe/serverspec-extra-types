@@ -7,7 +7,7 @@ All checks run on the target, which can be useful when executing via a bastion h
 
 
 ## Requirements
-* rabbitmq and cunsul checks requires curl to be installed on the target
+* rabbitmq and consul checks requires curl to be installed on the target
 
 ## Installation
 
@@ -162,6 +162,16 @@ describe docker_container('focused_currie') do
   it { should publishes_all_ports }
 end
 ```
+
+### docker_service
+##### exist
+Check if a service exists by name
+```ruby
+describe docker_service('my_service') do
+  it { should exist }
+end
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

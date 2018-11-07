@@ -2,7 +2,6 @@ require 'serverspec_extra_types/types/rabbitmq_base'
 
 module Serverspec::Type
   class RabbitmqUserPermission < RabbitmqBase
-
     def url
       "#{@url_base}/api/users/#{name}/permissions"
     end
@@ -20,20 +19,19 @@ module Serverspec::Type
     end
 
     def read_permissions(vhost)
-      inspection.find { |item| item['vhost'] == vhost}['read']
+      inspection.find { |item| item['vhost'] == vhost }['read']
     end
 
     def write_permissions(vhost)
-      inspection.find { |item| item['vhost'] == vhost}['write']
+      inspection.find { |item| item['vhost'] == vhost }['write']
     end
 
     def configure_permissions(vhost)
-      inspection.find { |item| item['vhost'] == vhost}['configure']
+      inspection.find { |item| item['vhost'] == vhost }['configure']
     end
 
     def inspection
       @inspection ||= ::MultiJson.load(get_inspection.stdout)
     end
-
   end
 end

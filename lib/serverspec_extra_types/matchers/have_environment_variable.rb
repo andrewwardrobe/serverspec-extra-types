@@ -1,5 +1,5 @@
 RSpec::Matchers.define :have_environment_variable do |regex|
-  chain :with_value do | value|
+  chain :with_value do |value|
     @value = value
   end
   match do |actual|
@@ -17,5 +17,4 @@ RSpec::Matchers.define :have_environment_variable do |regex|
       "expected #{regex} to have value #{@value}, it was #{actual.environment_variable(regex)}"
     end
   end
-
 end

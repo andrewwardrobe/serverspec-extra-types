@@ -12,7 +12,7 @@ module Serverspec::Type
     end
 
     def has_image_sha?(image)
-      self.image_sha == image
+      image_sha == image
     end
 
     def image
@@ -29,7 +29,6 @@ module Serverspec::Type
       else
         environment_variable(regex)
       end
-
     end
 
     def environment_variable(regex)
@@ -57,7 +56,7 @@ module Serverspec::Type
     end
 
     def has_domainname?(domain)
-      self.domain_name == domain
+      domain_name == domain
     end
 
     def domain_name
@@ -79,11 +78,13 @@ module Serverspec::Type
     def restart_policy
       inspection['HostConfig']['RestartPolicy']['Name']
     end
+
     def has_host?(host)
       hosts.include? host
     end
+
     def hosts
-      inspection['HostConfig']['ExtraHosts'].map {|itm| itm.split(':')[1] + ' ' + itm.split(':')[0]}
+      inspection['HostConfig']['ExtraHosts'].map { |itm| itm.split(':')[1] + ' ' + itm.split(':')[0] }
     end
 
     def privileged?
@@ -94,7 +95,6 @@ module Serverspec::Type
     def publishes_all_ports?
       inspection['HostConfig']['PublishAllPorts']
     end
-
 
     def map_port?(host, container, protocol = 'tcp')
       inspection['NetworkSettings']['Ports']["#{container}/#{protocol}"][0]['HostPort'] == host
@@ -117,7 +117,7 @@ module Serverspec::Type
     private
 
     def get_inspection
-      @containers ||=  @name.include?('=') ? @runner.run_command("docker ps -qa -f #{@name}").stdout : @name
+      @containers ||= @name.include?('=') ? @runner.run_command("docker ps -qa -f #{@name}").stdout : @name
       @get_inspection ||= @runner.run_command("docker inspect #{@containers}")
     end
   end

@@ -1,20 +1,27 @@
 RSpec::Matchers.define :have_label do |label|
-  match do |actual|
-    actual.labels.key? label
+  chain :with_value do |_value|
+    @value = _value
   end
-  failure_message do |actual|
-    "expected #{actual.labels} to have key #{label}"
-  end
-end
 
-RSpec::Matchers.define :have_label_with_value do |label, value|
   match do |actual|
-    actual.labels[label] == value
-  end
-  failure_message do |actual|
-    "expected #{actual.labels[label]} to be #{value}"
+    if !@value
+      actual.labels.key? label
+    else
+      actual.has_label?(label, @value)
+    end
   end
   description do
-    "have label #{label} with value #{value}"
+    if !@value
+      "have label #{label}"
+    else
+      "have label #{label} with value #{@value}"
+      end
+  end
+  failure_message do |actual|
+    if !@value
+      "expected #{actual.labels} to have key #{label}"
+    else
+      "expected #{actual.label(label)[0]} to have value #{@value}, it had #{actual.label(label)[1]} "
+    end
   end
 end

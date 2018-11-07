@@ -2,5 +2,18 @@ AllCops:
   Exclude:
     - 'serverspec-extra-types.gemspec'
 
-Metric/LineLength:
-  Max: 120
+tyle/Documentation:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 140
+
+
+Metrics/MethodLength:
+ Max: 15
+
+Metrics/BlockLength:
+  Exclude:
+    - 'Rakefile'
+    - '**/*.rake'
+    - 'spec/**/*.rb'

@@ -1,7 +1,5 @@
 RSpec::Matchers.define :be_active do
-  match do |actual|
-    actual.active?
-  end
+  match(&:active?)
   failure_message do |actual|
     "expected '#{actual.availability}' to be active"
   end

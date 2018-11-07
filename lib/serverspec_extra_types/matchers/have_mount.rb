@@ -1,11 +1,15 @@
-RSpec::Matchers.define :have_mount do |source, target, type = 'bind'|
+RSpec::Matchers.define :have_mount do |source, target|
+  chain :type, :type
   match do |actual|
-    actual.has_mount?(source, target, type)
+    @type ||= source.include?('/') ? 'bind' : 'volume'
+    actual.has_mount?(source, target, @type)
   end
   description do
-    "mount #{source} on host to #{target} in container as a #{type} mount"
+    @type ||= source.include?('/') ? 'bind' : 'volume'
+    "#{@type == 'bind' ? 'bind' : 'mount volume'} #{source} on host to #{target} in container"
   end
   failure_message do |actual|
-    "expected #{actual.mounts} to contain {'Target' => #{target}, 'Destination' => #{source} , 'Type' => #{type}}"
+    @type ||= source.include?('/') ? 'bind' : 'volume'
+    "expected #{actual.mounts} to contain {'Target' => #{target}, 'Source' => #{source}, 'Type' => #{@type}}"
   end
 end

@@ -1,4 +1,3 @@
-
 #--- Docker Matchers
 require 'serverspec_extra_types/matchers/be_active'
 require 'serverspec_extra_types/matchers/be_a_manager_node'
@@ -9,6 +8,7 @@ require 'serverspec_extra_types/matchers/have_placement_constraint'
 require 'serverspec_extra_types/matchers/have_hostname'
 require 'serverspec_extra_types/matchers/have_host'
 require 'serverspec_extra_types/matchers/have_image'
+require 'serverspec_extra_types/matchers/have_label'
 require 'serverspec_extra_types/matchers/have_image_sha'
 require 'serverspec_extra_types/matchers/have_restart_limit'
 require 'serverspec_extra_types/matchers/have_restart_policy'

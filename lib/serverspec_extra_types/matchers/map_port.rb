@@ -1,7 +1,6 @@
 RSpec::Matchers.define :map_port do |host, container|
-
   match do |actual|
-    @protocol = 'tcp' unless @protocol
+    @protocol ||= 'tcp'
     if @mode
       actual.map_port? host, container, @protocol, @mode
     else
@@ -15,11 +14,10 @@ RSpec::Matchers.define :map_port do |host, container|
     msg
   end
   failure_message do |actual|
-    @protocol = 'tcp' unless @protocol
+    @protocol ||= 'tcp'
     "expected #{actual.port_map} to contain {\"#{container}/#{@protocol}\"=>[{\"HostPort\"=>\"#{host}\"}] }"
   end
 
   chain :using_protocol, :protocol
   chain :with_mode, :mode
-
 end

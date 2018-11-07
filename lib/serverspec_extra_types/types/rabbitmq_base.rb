@@ -13,7 +13,6 @@ module Serverspec::Type
       @url_base = property[:variables][:rabbitmq_url] || 'http://localhost:15672'
     end
 
-
     def inspection
       @inspection ||= ::MultiJson.load(get_inspection.stdout)[0]
     end
@@ -21,7 +20,7 @@ module Serverspec::Type
     def length
       if inspection.is_a? String
         inspection.length
-      elsif inspection.kind_of? Array
+      elsif inspection.is_a? Array
         inspection.length
       else
         1

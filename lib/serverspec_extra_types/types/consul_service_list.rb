@@ -1,16 +1,14 @@
 require 'serverspec_extra_types/types/consul_base'
 
-
 # TODO: List and singular
 module Serverspec::Type
   class ConsulServiceList < ConsulBase
-
     def url
       "#{@url_base}/v1/catalog/services"
     end
 
     def to_s
-      msg = "Consul Service List"
+      msg = 'Consul Service List'
       msg << %( with acl token: "#{@token}") if @token
       msg
     end
@@ -26,7 +24,5 @@ module Serverspec::Type
     def inspection
       @inspection ||= ::MultiJson.load(get_inspection.stdout)
     end
-
-
   end
 end

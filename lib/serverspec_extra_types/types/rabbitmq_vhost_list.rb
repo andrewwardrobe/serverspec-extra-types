@@ -1,11 +1,9 @@
 require 'serverspec_extra_types/types/rabbitmq_base'
 
 module Serverspec::Type
-  class RabbitmqVhostList   < RabbitmqBase
-
-
+  class RabbitmqVhostList < RabbitmqBase
     def has_vhost?(vhost)
-     inspection.find { |str| str['name'] == vhost }
+      inspection.find { |str| str['name'] == vhost }
     end
 
     def url
@@ -15,8 +13,5 @@ module Serverspec::Type
     def inspection
       @inspection ||= ::MultiJson.load(get_inspection.stdout)
     end
-
-
-
   end
 end

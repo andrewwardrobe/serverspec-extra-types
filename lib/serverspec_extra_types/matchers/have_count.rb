@@ -1,6 +1,6 @@
 RSpec::Matchers.define :have_count do |count|
   match do |actual|
-    actual.length ==  count
+    actual.length == count
   end
   description do
     "have #{count}"

@@ -2,7 +2,6 @@ require 'serverspec_extra_types/types/rabbitmq_base'
 
 module Serverspec::Type
   class RabbitmqVhostPolicy < RabbitmqBase
-
     def initialize(name = nil, vhost = nil, options = {})
       super(name, options)
       @vhost = vhost

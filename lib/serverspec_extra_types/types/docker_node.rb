@@ -1,6 +1,5 @@
 module Serverspec::Type
   class DockerNode < DockerBase
-
     def active?
       availability == 'active'
     end
@@ -32,10 +31,11 @@ module Serverspec::Type
     def engine_version
       inspection['Description']['Engine']['EngineVersion']
     end
+
     private
 
     def get_inspection
-      @get_inspection ||= @runner.run_command("docker service inspect #{@name}")
+      @get_inspection ||= @runner.run_command("docker node inspect #{@name}")
     end
   end
 end

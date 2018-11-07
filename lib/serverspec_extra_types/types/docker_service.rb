@@ -1,6 +1,7 @@
 require 'serverspec'
 require 'serverspec/type/base'
 require 'serverspec/type/docker_base'
+require 'serverspec_extra_types/types/docker_network'
 
 module Serverspec::Type
   class DockerService < DockerBase
@@ -58,6 +59,26 @@ module Serverspec::Type
       inspection['Spec']['TaskTemplate']['ContainerSpec']['Mounts']
     end
 
+    def has_config?(name, target = nil)
+      if target
+        configs.find { |config| config['ConfigName'] == name && config['File']['Name'] == target }
+      else
+        configs.find { |config| config['ConfigName'] == name }
+      end
+    end
+
+    def configs
+      inspection['Spec']['TaskTemplate']['ContainerSpec']['Configs']
+    end
+
+    def has_secret?(name)
+      secrets.find { |secret| secret['SecretName'] == name }
+    end
+
+    def secrets
+      inspection['Spec']['TaskTemplate']['ContainerSpec']['Secrets']
+    end
+
     def has_host?(host)
       hosts.include? host
     end
@@ -78,9 +99,6 @@ module Serverspec::Type
       inspection['Spec']['Mode']['Replicated']
     end
 
-    def replicas
-      ['Spec']['Mode']['Replicated']['Replicas']
-    end
     def global?
       inspection['Spec']['Mode']['Global']
     end
@@ -94,14 +112,15 @@ module Serverspec::Type
     end
 
     def has_network?(name)
-      networks.find { |network| network['Aliases'].include? name }
+      target_network = DockerNetwork.new(name)
+      networks.find { |network| network['Target'].include? target_network.id }
     end
 
     def port_map
       inspection['Spec']['EndpointSpec']['Ports']
     end
 
-    def map_port?(published, target, protocol = 'tcp',mode = 'ingress')
+    def map_port?(published, target, protocol = 'tcp', mode = 'ingress')
       port_map.find do |port|
         port['PublishedPort'] == published.to_i &&
           port['TargetPort'] == target.to_i && port['PublishMode'] == mode &&
@@ -109,6 +128,37 @@ module Serverspec::Type
       end
     end
 
+    def has_environment_variable?(regex, value = nil)
+      if value
+        environment_variable(regex) == value
+      else
+        environment_variable(regex)
+      end
+    end
+
+    def environment_variable(regex)
+      environment_variables.find { |str| str =~ /^#{regex}=/ }.split('=')[1]
+    end
+
+    def environment_variables
+      inspection['Spec']['TaskTemplate']['ContainerSpec']['Env']
+    end
+
+    def has_label?(label, value = nil)
+      if value
+        label(label)[1] == value
+      else
+        label(label)
+      end
+    end
+
+    def label(label)
+      labels.find { |key, _val| key == label }
+    end
+
+    def labels
+      inspection['Spec']['Labels']
+    end
 
     private
 

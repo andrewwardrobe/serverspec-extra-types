@@ -32,7 +32,7 @@ module Serverspec::Type
     end
 
     def environment_variable(regex)
-      environment_variables.find { |str| str =~ /^#{regex}=/ }.split('=')[1]
+      environment_variables.find { |str| str =~ /^#{regex}=/ }.split('=')[1..-1].join('=')
     end
 
     def environment_variables

@@ -5,7 +5,8 @@ module Serverspec
   module Helper
     module Type
       types = %w[docker_service docker_node rabbitmq_vhost_policy rabbitmq_node_list rabbitmq_vhost_list
-                 rabbitmq_user_permission consul_service consul_service_list consul_node consul_node_list]
+                 rabbitmq_user_permission consul_service consul_service_list consul_node consul_node_list
+                 service_url]
 
       types.each do |type|
         require "serverspec_extra_types/types/#{type}"

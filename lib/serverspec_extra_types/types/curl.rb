@@ -9,6 +9,7 @@ module Serverspec::Type
       super(name, options)
       @url_base = name
       @insecure = options[:insecure]
+      @redirects = options[:follow_redirects]
     end
 
     def url
@@ -46,7 +47,7 @@ module Serverspec::Type
     private
 
     def get_inspection
-      command = "curl -s  -w \"#{output_format}\" #{url} #{@insecure ? '-k' : ''}"
+      command = "curl -s  -w \"#{output_format}\" #{url} #{@insecure ? '-k' : ''} #{@redirects ? '-L' : ''}"
       unless @get_inspection
         (body, rest) = @runner.run_command(command).stdout.split('!!SS_URL_YAML!!')
         result = YAML.safe_load(rest).each_with_object({}) { |(k, v), memo| memo[k.to_sym] = v; }

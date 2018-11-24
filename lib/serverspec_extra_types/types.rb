@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'serverspec_extra_types/types/docker_container'
 require 'serverspec/helper/type'
 

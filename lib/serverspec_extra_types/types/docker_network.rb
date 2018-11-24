@@ -1,9 +1,10 @@
+# frozen_string_literal: true
+
 require 'serverspec'
 
 module Serverspec::Type
   # This class  monkey patches serverspec's docker container type with some more method to be used in matchers
   class DockerNetwork < DockerBase
-
     def name
       inspection['Name']
     end
@@ -13,7 +14,6 @@ module Serverspec::Type
     end
 
     private
-
 
     def get_inspection
       @get_inspection ||= @runner.run_command("docker network inspect #{@name}")

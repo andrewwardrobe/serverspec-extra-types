@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec::Matchers.define :be_a_worker_node do
   match do |actual|
     actual.role == 'worker'

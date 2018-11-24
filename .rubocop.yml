@@ -1,8 +1,10 @@
 AllCops:
+  TargetRubyVersion: 2.4
   Exclude:
     - 'serverspec-extra-types.gemspec'
+    - 'util/mkcode.rb'
 
-tyle/Documentation:
+Style/Documentation:
   Enabled: false
 
 Metrics/LineLength:

@@ -1,3 +1,5 @@
+# frozen_string_literal: false
+
 RSpec::Matchers.define :have_environment_variable do |regex|
   chain :with_value do |value|
     @value = value

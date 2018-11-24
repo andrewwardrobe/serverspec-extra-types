@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'serverspec'
 require 'serverspec/type/base'
 require 'serverspec/type/docker_base'

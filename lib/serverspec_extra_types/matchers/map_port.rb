@@ -1,3 +1,5 @@
+# frozen_string_literal: false
+
 RSpec::Matchers.define :map_port do |host, container|
   match do |actual|
     @protocol ||= 'tcp'

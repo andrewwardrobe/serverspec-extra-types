@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec::Matchers.define :have_replica_count do |count|
   match do |actual|
     actual.replicas == count

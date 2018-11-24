@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 RSpec::Matchers.define :have_label do |label|
-  chain :with_value do |_value|
-    @value = _value
+  chain :with_value do |value|
+    @value = value
   end
 
   match do |actual|

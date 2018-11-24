@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec::Matchers.define :have_engine_version do |version|
   match do |actual|
     actual.has_engine_version? version

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec::Matchers.define :have_network do |name|
   match do |actual|
     actual.has_network? name

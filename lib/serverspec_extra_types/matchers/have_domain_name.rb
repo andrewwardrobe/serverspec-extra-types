@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec::Matchers.define :have_domainname do |domain|
   match do |actual|
     actual.has_domainname? domain

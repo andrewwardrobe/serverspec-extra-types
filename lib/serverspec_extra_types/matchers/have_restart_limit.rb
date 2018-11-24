@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec::Matchers.define :have_restart_limit do |count|
   match do |actual|
     actual.has_restart_limit? count

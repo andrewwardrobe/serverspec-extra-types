@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec::Matchers.define :have_hostname do |hostname|
   match do |actual|
     actual.has_hostname? hostname

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'specinfra'
 
 rabbitmq_user = ENV['RABBITMQ_USER'] || 'guest'

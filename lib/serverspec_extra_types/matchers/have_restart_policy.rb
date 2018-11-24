@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec::Matchers.define :have_restart_policy do |policy|
   match do |actual|
     actual.has_restart_policy?(policy)

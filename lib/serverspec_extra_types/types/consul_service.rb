@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'serverspec_extra_types/types/consul_base'
 
 # TODO: List and singular

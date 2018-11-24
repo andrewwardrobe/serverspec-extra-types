@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--- Docker Matchers
 require 'serverspec_extra_types/matchers/be_active'
 require 'serverspec_extra_types/matchers/be_a_manager_node'

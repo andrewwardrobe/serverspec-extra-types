@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec::Matchers.define :be_a_manager_node do
   match do |actual|
     actual.role == 'manager'

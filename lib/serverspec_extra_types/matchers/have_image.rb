@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec::Matchers.define :have_image do |image|
   match do |actual|
     actual.has_image?(image)

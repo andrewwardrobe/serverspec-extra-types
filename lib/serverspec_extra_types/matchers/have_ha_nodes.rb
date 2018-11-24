@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec::Matchers.define :have_ha_nodes do |count|
   match do |actual|
     actual.has_ha_nodes? count

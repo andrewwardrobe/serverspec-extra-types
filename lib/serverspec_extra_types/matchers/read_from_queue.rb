@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec::Matchers.define :read_from_queue do |vhost, queue|
   match do |actual|
     actual.read_from_queue?(vhost, queue)

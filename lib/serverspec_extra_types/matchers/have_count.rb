@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec::Matchers.define :have_count do |count|
   match do |actual|
     actual.length == count

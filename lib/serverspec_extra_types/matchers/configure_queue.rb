@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec::Matchers.define :configure_queue do |vhost, queue|
   match do |actual|
     actual.configure_queue? vhost, queue

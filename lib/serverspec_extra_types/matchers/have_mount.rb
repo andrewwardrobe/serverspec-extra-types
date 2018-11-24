@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec::Matchers.define :have_mount do |source, target|
   chain :type, :type
   match do |actual|

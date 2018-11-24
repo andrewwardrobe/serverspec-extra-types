@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'bundler/setup'
 require 'serverspec_extra_types'
 require 'serverspec_launcher/spec_helper'

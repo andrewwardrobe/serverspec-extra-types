@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec::Matchers.define :have_user do |user|
   match do |actual|
     actual.has_user? user

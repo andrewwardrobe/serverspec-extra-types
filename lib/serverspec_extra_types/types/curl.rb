@@ -2,7 +2,7 @@ require 'serverspec_extra_types/helpers/properties'
 require 'serverspec_extra_types/types/api_base'
 
 module Serverspec::Type
-  class ServiceUrl < ApiBase
+  class Curl < ApiBase
     def initialize(name = nil, options = {})
       super(name, options)
       @url_base = name

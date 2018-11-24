@@ -32,3 +32,5 @@ require 'serverspec_extra_types/matchers/read_from_queue'
 require 'serverspec_extra_types/matchers/write_to_queue'
 require 'serverspec_extra_types/matchers/configure_queue'
 require 'serverspec_extra_types/matchers/have_count'
+
+require 'serverspec_extra_types/matchers/url_matchers'

@@ -1,10 +1,23 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
 RSpec::Matchers.define :have_host do |host|
   match do |actual|
-    actual.has_host? host
+    if !@option
+      actual.has_host? host
+    else
+      actual.has_host? host, @option
+    end
+  end
+  description do
+    msg = "have #{host}"
+    msg << " with option #{@option}" if @option
+    msg
   end
   failure_message do |actual|
-    "expected #{actual.hosts} to contain #{host}"
+    msg = "expected #{actual.hosts} to contain #{host}"
+    msg << " with option '#{@option}'" if @option
+    msg
   end
+
+  chain :with_option, :option
 end

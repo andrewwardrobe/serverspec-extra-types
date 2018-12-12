@@ -9,6 +9,8 @@ module Serverspec::Type
   class ApiBase < Base
     def initialize(name = nil, options = {})
       super(name, options)
+      @insecure = options[:insecure]
+      @redirects = options[:follow_redirects]
     end
 
     def [](key)
@@ -31,7 +33,7 @@ module Serverspec::Type
     private
 
     def get_inspection
-      command = "curl -s #{url}"
+      command = "curl -s #{url} #{@insecure ? '-k' : ''} #{@redirects ? '-L' : ''}"
       @get_inspection ||= @runner.run_command(command)
     end
   end

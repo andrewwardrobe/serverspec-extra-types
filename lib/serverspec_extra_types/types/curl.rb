@@ -8,8 +8,6 @@ module Serverspec::Type
     def initialize(name = nil, options = {})
       super(name, options)
       @url_base = name
-      @insecure = options[:insecure]
-      @redirects = options[:follow_redirects]
     end
 
     def url

@@ -17,7 +17,7 @@ module Serverspec::Type
     end
 
     def url
-      jobname = @name.sub('/','/job/')
+      jobname = @name.gsub('/','/job/')
       "#{@url_base}/job/#{jobname}/api/json"
     end
 
@@ -36,7 +36,7 @@ module Serverspec::Type
     end
 
     def multibranch?
-      inspection['_class'] == "org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject"
+      inspection['_class'] == 'org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject'
     end
 
     def multibranch_project?
@@ -52,7 +52,7 @@ module Serverspec::Type
     end
 
     def maven?
-      inspection['_class'] == "hudson.maven.MavenModuleSet"
+      inspection['_class'] == 'hudson.maven.MavenModuleSet'
     end
 
     def maven_project?
@@ -92,7 +92,7 @@ module Serverspec::Type
     end
 
     def has_job?(job)
-      inspection['jobs'].find {|job| job['name'] == job}
+      inspection['jobs'].find { |job| job['name'] == job }
     end
 
 
@@ -109,7 +109,7 @@ module Serverspec::Type
     end
 
     def has_empty_job_list?
-      inspection['jobs'].length != 0
+      inspection['jobs'].length == 0
     end
 
     private

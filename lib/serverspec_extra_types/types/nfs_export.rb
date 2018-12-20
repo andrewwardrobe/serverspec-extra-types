@@ -40,7 +40,7 @@ module Serverspec::Type
     end
 
     def inspection
-      get_inspection.stdout
+      @inspection ||= get_inspection.stdout
     end
 
     def get_inspection

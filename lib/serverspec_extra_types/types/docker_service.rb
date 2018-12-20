@@ -73,8 +73,12 @@ module Serverspec::Type
       inspection['Spec']['TaskTemplate']['ContainerSpec']['Configs']
     end
 
-    def has_secret?(name)
-      secrets.find { |secret| secret['SecretName'] == name }
+    def has_secret?(name, target = nil)
+      if target
+        secrets.find { |secret| secret['SecretName'] == name && secret['File']['Name'] == target}
+      else
+        secrets.find { |secret| secret['SecretName'] == name }
+      end
     end
 
     def secrets

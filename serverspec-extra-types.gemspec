@@ -31,7 +31,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency  'rspec-collection_matchers'
   spec.add_development_dependency  'rest-client'
   spec.add_development_dependency 'docker-swarm-sdk'
-  spec.add_development_dependency 'rspec-teamcity', '~> 1.0.1'
   spec.add_development_dependency 'sinatra'
 
   spec.add_runtime_dependency 'serverspec'

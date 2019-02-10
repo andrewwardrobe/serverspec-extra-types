@@ -22,14 +22,17 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_development_dependency 'bundler', '~> 1.16'
+  spec.add_development_dependency 'bundler', '~> 2'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '~> 3.8.0'
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'simplecov'
-  spec.add_development_dependency 'serverspec_launcher', '~> 0.2'
-  spec.add_development_dependency 'rest-client'
+  spec.add_development_dependency 'serverspec_launcher', '~> 0.3.1'
   spec.add_development_dependency  'rspec-collection_matchers'
+  spec.add_development_dependency  'rest-client'
+  spec.add_development_dependency 'docker-swarm-sdk'
+  spec.add_development_dependency 'rspec-teamcity', '~> 1.0.1'
+  spec.add_development_dependency 'sinatra'
 
   spec.add_runtime_dependency 'serverspec'
 

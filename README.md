@@ -24,10 +24,227 @@ And then execute:
 Or install it yourself as:
 
     $ gem install serverspec-extra-types
-
 ## Usage
 
-### docker_container
+Add the following to your spec_helper.rb
+
+```ruby
+require 'serverspec-extra-types'
+```
+
+## Resource types
+[curl](#curl) | 
+[consul_node](#consul_node) | [consul_node_list](#consul_node_list) | [consul_service](#consul_service) | 
+[consul_service_list](#consul_service_list) | 
+[docker_container](#docker_container) | [docker_network](#docker_network)  | [docker_node](#docker_node) |
+[docker_service](#docker_service) |
+[jenkins_credential](#jenkins_credential) |[jenkins_job](#jenkins_job) | [jenkins_plugin](#jenkins_plugin) | 
+[nfs_export](#nfs_export) | 
+[rabbitmq_node_list](#rabbitmq_node_list) | [rabbitmq_user_permission](#rabbitmq_user_permission) | 
+[rabbitmq_vhost_list](#rabbitmq_vhost_list) | [rabbitmq_vhost_policy](#rabbitmq_vhost_policy) | [sudo_user](#sudo_user)
+
+### curl <a name="curl" ></a>
+<sub><sup>Please note: This type requires curl to be installed on the target host</sup></sub>
+
+The curl resource allow for check against remote url. Addition parameters are avaliable to allow for insecure certifactes and follow redirects
+
+Example:
+```ruby
+describe curl("https://example.org") do
+  it { should respond_with_OK }
+end
+
+#Without certificate verification
+describe curl("https://example.org", insecure: true) do
+  it { should respond_with_OK }
+end
+
+#Following redirects 
+describe curl("https://example.org", follow_redirects: true) do
+  it { should respond_with_OK }
+end
+```
+
+For a full list of HTTP matchers see [HTTP Matchers](http_matchers.md)
+
+### consul_node <a name="consul_node" ></a>
+<sub><sup>Please note: This type requires curl to be installed on the target host</sup></sub>
+##### have_datacenter
+```ruby
+describe consul_node('consul') do
+  it { should have_datacenter 'dc1'}
+end
+```
+
+##### have_service
+```ruby
+describe consul_node('consul') do
+  it { should have_datacenter 'dc1'}
+end
+```
+<sub><sup>Supports the same additional parameters as the curl matcher</sup></sub>
+### consul_node_list <a name="consul_node_list" ></a>
+<sub><sup>Please note: This type requires curl to be installed on the target host</sup></sub>
+##### have_node
+```ruby
+describe consul_node_list() do
+    it { should have_node 'consul' }
+end
+```
+<sub><sup>Supports the same additional parameters as the curl matcher</sup></sub>
+### consul_service <a name="consul_service" ></a>
+<sub><sup>Please note: This type requires curl to be installed on the target host</sup></sub>
+#### have_id
+```ruby
+describe consul_service('consul') do
+  it { should have_id('7ba9a647-0adb-8c92-b0c9-5b011b3530a8') }
+end
+```
+
+#### have_node
+```ruby
+describe consul_service('consul') do
+  it { should have_node('consul') }
+end
+```
+
+#### have_address
+```ruby
+describe consul_service('consul') do
+  it { should have_address('127.0.0.1') }
+end
+```
+
+#### have_datacenter
+```ruby
+describe consul_service('consul') do
+  it { should have_datacenter('dc1') }
+end
+```
+
+#### have_tagged_addresses
+```ruby
+describe consul_service('consul') do
+  it { should have_tagged_addresses({"lan"=>"127.0.0.1", "wan"=>"127.0.0.1"}) }
+end
+```
+
+#### have_node_meta
+```ruby
+describe consul_service('consul') do
+  it { should have_node_meta({"consul-network-segment"=>""}) }
+end
+```
+
+#### have_service_kind
+```ruby
+describe consul_service('consul') do
+  it { should have_service_kind('') }
+end
+```
+
+#### have_service_id
+```ruby
+describe consul_service('consul') do
+  it { should have_service_id('consul') }
+end
+```
+
+#### have_service_name
+```ruby
+describe consul_service('consul') do
+  it { should have_service_name('consul') }
+end
+```
+
+#### have_service_tags
+```ruby
+describe consul_service('consul') do
+  it { should have_service_tags([]) }
+end
+```
+
+#### have_service_address
+```ruby
+describe consul_service('consul') do
+  it { should have_service_address('') }
+end
+```
+
+#### have_service_weights
+```ruby
+describe consul_service('consul') do
+  it { should have_service_weights({"Passing"=>1, "Warning"=>1}) }
+end
+```
+
+#### have_service_meta
+```ruby
+describe consul_service('consul') do
+  it { should have_service_meta({}) }
+end
+```
+
+#### have_service_port
+```ruby
+describe consul_service('consul') do
+  it { should have_service_port(8300) }
+end
+```
+
+#### have_service_enable_tag_override
+```ruby
+describe consul_service('consul') do
+  it { should have_service_enable_tag_override(false) }
+end
+```
+
+#### have_service_proxy_destination
+```ruby
+describe consul_service('consul') do
+  it { should have_service_proxy_destination('') }
+end
+```
+
+#### have_service_proxy
+```ruby
+describe consul_service('consul') do
+  it { should have_service_proxy({}) }
+end
+```
+
+#### have_service_connect
+```ruby
+describe consul_service('consul') do
+  it { should have_service_connect({}) }
+end
+```
+
+#### have_create_index
+```ruby
+describe consul_service('consul') do
+  it { should have_create_index(9) }
+end
+```
+
+#### have_modify_index
+```ruby
+describe consul_service('consul') do
+  it { should have_modify_index(9) }
+end
+```
+<sub><sup>Supports the same additional parameters as the curl matcher</sup></sub>
+### consul_service_list <a name="consul_service_list" ></a>
+<sub><sup>Please note: This type requires curl to be installed on the target host</sup></sub>
+##### have_service
+```ruby
+describe consul_service_list() do
+    it { should have_service 'consul' }
+end
+```
+<sub><sup>Supports the same additional parameters as the curl matcher</sup></sub>
+
+### docker_container <a name="docker_container"></a>
 Extension of the serverspec docker container type, and provides the following matchers:
 
 this type now supports selecting the container via a filter or by name
@@ -52,14 +269,14 @@ end
 ```
 
 ##### be_running
-Check if a container is runnig (from serverspec)
+Check if a container is running (from serverspec)
 ```ruby
 describe docker_container('focused_curie') do
   it { should be_running }
 end
 ```
 ##### have_image
-Check if container is running a spefic image
+Check if container is running a specfic image
 ```ruby
 describe docker_container('focused_currie') do
   it { should have_image('jenkins/jenkins:lts') }
@@ -171,6 +388,304 @@ describe docker_service('my_service') do
   it { should exist }
 end
 ```
+##### have_image
+Check if service is running a specfic image
+```ruby
+describe docker_service('my-awesome-service') do
+  it { should have_image('jenkins/jenkins:lts') }
+end
+```
+
+##### have_user / run_as_user
+Check if service is running as the specified user
+```ruby
+describe docker_service('my-awesome-service') do
+  it { should run_as_user('jenkins') }
+end
+```
+
+##### map_port
+Check if host port is mapped to service port
+```ruby
+describe docker_service('my-awesome-service') do
+  it { should map_port('80','8080') }
+end
+```
+Check if host port is mapped to service port using a specific protocol
+```ruby
+describe docker_service('my-awesome-service') do
+  it { should map_port('80','8080').using_protocol('tcp') }
+end
+```
+##### have_volume
+Check the for a volume (from serverspec)
+```ruby
+describe docker_service('my-awesome-service') do
+  it {  it { should have_volume('/tmp','/data') }}
+end
+```
+##### have_mount
+Check the for mounted volume
+```ruby
+describe docker_service('my-awesome-service') do
+  it { should have_mount('/var/run/docker.sock', '/var/run/docker.sock') }
+end
+```
+##### have_restart_policy
+Check the services restart policy
+```ruby
+describe docker_service('my-awesome-service') do
+  it { should have_restart_policy('any') }
+end
+```
+##### have_restart_limit
+Check the services restart limit
+```ruby
+describe docker_service('my-awesome-service') do
+  it { should have_restart_limit(1) }
+end
+```
+##### have_host
+Check for additional /etc/hosts entries
+```ruby
+describe docker_service('my-awesome-service') do
+  it { should have_host('8.8.8.8 dns') }
+end
+```
+##### have_environment_variable
+Check if the service has an specific environment variable
+```ruby
+describe docker_service('my-awesome-service') do
+  it { should have_environment_variable('CONSUL_VERSION')  }
+end
+# check its value
+describe docker_service('my-awesome-service') do
+  it { should have_environment_variable('CONSUL_VERSION').with_value('1.2.0') }
+end
+```
+
+##### be_labeled/be_labelled
+Check if the service has an specific label
+```ruby
+describe docker_service('my-awesome-service') do
+  it { should be_labeled('CONSUL_VERSION')  }
+end
+# check its value
+describe docker_service('my-awesome-service') do
+  it { should be_labeled('CONSUL_VERSION').with_value('1.2.0') }
+end
+```
+This matcher supports both the UK and US spelling of labelled and also has have_label as an alias but this may conflict with dockerspec's have_lable matcher if using along side
+##### have_config
+Check the service has a particular config
+```ruby
+describe docker_service('my-awesome-service') do
+  # Check that it uses a config
+  it { should have_config('nginx.conf')  } 
+  # Check that it places the config in a particular location
+  it { should have_config('nginx.conf', '/some/target/path')  }  
+end
+```
+##### have_secret
+Check the service has a particular secret
+```ruby
+describe docker_service('my-awesome-service') do
+  # Check that it uses a secret
+  it { should have_secret('secret.crt')  } 
+  # Check that it places the secret in a particular location
+  it { should have_secret('secret.crt', '/some/target/path')  }  
+end
+```
+
+##### be_global
+Check the service is running in global mode
+```ruby
+describe docker_service('my-awesome-service') do
+  it { should be_global } 
+end
+```
+##### be_replicated
+Check the service is running in replicated mode
+```ruby
+describe docker_service('my-awesome-service') do
+  it { should be_replicated } 
+end
+```
+##### have_replica_count
+Check the number of replicas the service has
+```ruby
+describe docker_service('my-awesome-service') do
+  it { should have_replica_count 2 } 
+end
+```
+
+##### have_placement_constraint
+Check the number of replicas the service has
+```ruby
+describe docker_service('my-awesome-service') do
+  it { should have_placement_constraint('node.role == manager') } 
+end
+```
+
+### docker_network <a name="docker_network" ></a>
+
+_TODO_
+
+
+### docker_node <a name="docker_node" ></a>
+
+##### exist
+Check if docker node exists
+```ruby
+describe docker_node('somehost') do
+  it { should exist }
+end
+```
+
+##### be_manager / be_a_manager
+Check if docker node is a manager node
+```ruby
+describe docker_node(`hostname -f`.chomp) do
+  it { should be_a_manager }
+end
+```
+
+##### be_worker / be_a_worker
+Check if docker node exists
+```ruby
+describe docker_node('somehost') do
+  it { should be_a_worker }
+end
+```
+
+##### have_engine_version
+Check engine version
+```ruby
+describe docker_node('somehost') do
+  it { should have_engine_version '18.09.1' }
+end
+```
+
+##### be_active
+Check if node is active
+```ruby
+describe docker_node('somehost') do
+  it { should be_active }
+end
+```
+
+##### be_draining
+Check if node is draining
+
+```ruby
+describe docker_node('somehost') do
+  it { should be_draining }
+end
+```
+
+##### be_paused
+Check if node is paused
+```ruby
+describe docker_node('somehost') do
+  it { should be_paused }
+end
+```
+### jenkins_credential <a name="jenkins_credential" ></a>
+<sub><sup>Please note: This type requires curl to be installed on the target host</sup></sub>
+
+_TODO_
+<sub><sup>Supports the same additional parameters as the curl matcher</sup></sub>
+### jenkins_job <a name="jenkins_job" ></a>
+<sub><sup>Please note: This type requires curl to be installed on the target host</sup></sub>
+
+_TODO_
+
+### jenkins_plugin <a name="jenkins_plugin" ></a>
+<sub><sup>Please note: This type requires curl to be installed on the target host</sup></sub>
+
+_TODO_
+<sub><sup>Supports the same additional parameters as the curl matcher</sup></sub>
+### nfs_export <a name="nfs_export" ></a>
+
+_TODO_
+
+### rabbitmq_node_list <a name="rabbitmq_node_list" ></a>
+<sub><sup>Please note: This type requires curl to be installed on the target host</sup></sub>
+
+_TODO_
+<sub><sup>Supports the same additional parameters as the curl matcher</sup></sub>
+### rabbitmq_user_permission <a name="rabbitmq_user_permission" ></a>
+<sub><sup>Please note: This type requires curl to be installed on the target host</sup></sub>
+
+_TODO_
+<sub><sup>Supports the same additional parameters as the curl matcher</sup></sub>
+
+### rabbitmq_vhost_list <a name="rabbitmq_vhost_list" ></a>
+<sub><sup>Please note: This type requires curl to be installed on the target host</sup></sub>
+
+_TODO_
+<sub><sup>Supports the same additional parameters as the curl matcher</sup></sub>
+
+### rabbitmq_vhost_policy <a name="rabbitmq_node_policy" ></a>
+<sub><sup>Please note: This type requires curl to be installed on the target host</sup></sub>
+
+_TODO_
+<sub><sup>Supports the same additional parameters as the curl matcher</sup></sub>
+
+### sudo_user <a name="sudo_user" ></a>
+Check the sudo permissions of a given user
+
+##### exist
+Checks if the user exists and is in the sudoers file
+```ruby
+describe sudo_user('someuser') do
+  it { should exist }
+end
+```
+
+##### have_sudo_disabled
+Ensures the user has no sudo permssions
+```ruby
+describe sudo_user('someuser') do
+  it { should have_sudo_disabled }
+end
+```
+
+##### be_allowed_to_run_command
+Ensures the user can run a command
+```ruby
+describe sudo_user('someuser') do
+  it { should be_allowed_run_anything }
+  # Without password
+  it { should be_allowed_run_anything.without_a_password }
+  #As a particular user
+  it { should be_allowed_run_anything.as('someotheruser') }
+  #As a particular user with out a password
+  it { should be_allowed_run_anything.as('someotheruser').without_a_password  }
+  #As any user
+  it { should be_allowed_run_anything.as_anybody }
+  #As Any user without  a password
+  it { should be_allowed_run_anything.as_anybody.without_password }
+end
+```
+##### be_allowed_to_run_anything
+Ensures the user can run a anything
+```ruby
+describe sudo_user('someuser') do
+  it { should be_allowed_run_anything }
+  # Without password
+  it { should be_allowed_run_anything.without_a_password }
+  #As a particular user
+  it { should be_allowed_run_anything.as('someotheruser') }
+  #As a particular user with out a password
+  it { should be_allowed_run_anything.as('someotheruser').without_a_password  }
+  #As any user
+  it { should be_allowed_run_anything.as_anybody }
+  #As Any user without  a password
+  it { should be_allowed_run_anything.as_anybody.without_password }
+end
+```
+
 
 ## Development
 

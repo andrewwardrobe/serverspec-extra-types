@@ -2,17 +2,31 @@
 
 options:
   # Stop the test on the first failure (default: true)
-  fail_on_err: true
+  fail_on_err: false
   # Specify output format defaults is docs_screen multiple formatters can be specified
-  formaters:
+  formatters:
      - tick
 
 targets:
   # Run tests against a vagrant file
-  docker:
-    backend: vagrant
-    vagrant_dir: spec/vagrant
-    spec_type: docker
+  container:
+    backend: exec
+    spec_type: docker_container
+
+  service:
+    backend: exec
+    spec_type: docker_service
+
+
+  node:
+    backend: exec
+    spec_type: docker_node
+
+  network:
+    backend: exec
+    spec_type: docker_network
+
+
 
   rabbitmq:
     backend: exec
@@ -21,3 +35,19 @@ targets:
   consul:
     backend: exec
     spec_type: consul
+
+
+  curl:
+    backend: exec
+    spec_type: curl
+
+  sudo:
+    backend: docker
+    docker_build_dir: spec/helpers
+    spec_type: sudo
+
+
+  sudo_user:
+    backend: docker
+    docker_build_dir: spec/helpers
+    spec_type: sudo_user

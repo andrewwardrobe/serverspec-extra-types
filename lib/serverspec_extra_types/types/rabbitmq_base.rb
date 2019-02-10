@@ -29,10 +29,16 @@ module Serverspec::Type
       end
     end
 
+
+
     private
 
+    def extra_args
+      "-u #{@user}:#{@password}"
+    end
+
     def get_inspection
-      command = "curl -s -u #{@user}:#{@password} #{url}"
+      command = curl_command
       @get_inspection ||= @runner.run_command(command)
     end
   end

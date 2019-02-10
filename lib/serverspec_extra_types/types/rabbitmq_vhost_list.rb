@@ -8,6 +8,10 @@ module Serverspec::Type
       inspection.find { |str| str['name'] == vhost }
     end
 
+    def to_s
+      "RabbitMQ VHosts List"
+    end
+
     def url
       "#{@url_base}/api/vhosts"
     end

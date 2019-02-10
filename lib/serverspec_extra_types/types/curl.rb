@@ -44,8 +44,12 @@ module Serverspec::Type
 
     private
 
+    def extra_args
+      "-w \"#{output_format}\""
+    end
+
     def get_inspection
-      command = "curl -s  -w \"#{output_format}\" #{url} #{@insecure ? '-k' : ''} #{@redirects ? '-L' : ''}"
+      command = curl_command
       unless @get_inspection
         (body, rest) = @runner.run_command(command).stdout.split('!!SS_URL_YAML!!')
         result = YAML.safe_load(rest).each_with_object({}) { |(k, v), memo| memo[k.to_sym] = v; }

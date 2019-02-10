@@ -3,14 +3,15 @@
 require 'spec_helper'
 require 'rest-client'
 
-RSpec.context 'RabbitMQ' do
+RSpec.context 'RabbitMQ Matchers' do
   before(:all) do
-    rabbitMQ = RabbitMQHelper.new
-    rabbitMQ.create_vhost('MyVhost')
+    @rabbitMQ = RabbitMQHelper.new
+    @rabbitMQ.start_rabbitmq_container
+    @rabbitMQ.create_vhost('MyVhost')
     policy_definition = { 'ha-mode' => 'exactly', 'ha-params' => 2, 'ha-sync-mode' => 'automatic' }
-    rabbitMQ.create_policy('MyVhost', 'ha-all', '.*', policy_definition)
-    rabbitMQ.create_user('MyUser', 'somepw')
-    rabbitMQ.create_permission('MyVhost', 'MyUser', '.*', '.*', '.*')
+    @rabbitMQ.create_policy('MyVhost', 'ha-all', '.*', policy_definition)
+    @rabbitMQ.create_user('MyUser', 'somepw')
+    @rabbitMQ.create_permission('MyVhost', 'MyUser', '.*', '.*', '.*')
   end
 
   describe rabbitmq_vhost_policy('ha-all', 'MyVhost') do
@@ -22,7 +23,7 @@ RSpec.context 'RabbitMQ' do
   end
 
   describe rabbitmq_node_list do
-    it { should have_count(2) }
+    it { should have_count(1) }
   end
 
   describe rabbitmq_vhost_list do
@@ -35,4 +36,8 @@ RSpec.context 'RabbitMQ' do
     it { should write_to_queue('MyVhost', 'Q1')  }
     it { should configure_queue('MyVhost', 'Q1') }
   end
+
+  after(:all){
+    @rabbitMQ.stop_rabbitmq_container
+  }
 end

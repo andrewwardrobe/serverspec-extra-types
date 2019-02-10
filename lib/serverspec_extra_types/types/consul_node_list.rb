@@ -20,7 +20,7 @@ module Serverspec::Type
     end
 
     def nodes
-      inspection.keys
+      inspection.map { |node| node['Node']}
     end
 
     def inspection

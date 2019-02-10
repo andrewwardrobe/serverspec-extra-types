@@ -26,14 +26,23 @@ module Serverspec::Type
       @url_base
     end
 
+
     def inspection
       @inspection ||= ::MultiJson.load(get_inspection.stdout)
     end
 
     private
 
+    def extra_args
+      ""
+    end
+
+    def curl_command
+      "curl #{extra_args} -s #{url} #{@insecure ? '-k' : ''} #{@redirects ? '-L' : ''}"
+    end
+
     def get_inspection
-      command = "curl -s #{url} #{@insecure ? '-k' : ''} #{@redirects ? '-L' : ''}"
+      command = curl_command
       @get_inspection ||= @runner.run_command(command)
     end
   end

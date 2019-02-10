@@ -9,8 +9,28 @@ module Serverspec::Type
       "#{@url_base}/v1/catalog/node/#{@name}"
     end
 
+    def has_datacenter?(dc)
+      datacenter == dc
+    end
+
+    def datacenter
+      inspection['Node']['Datacenter']
+    end
+
+    def has_service?(service_name)
+      service(service_name) != nil
+    end
+
+    def service(service_name)
+      services.find service_name
+    end
+
+    def services
+      inspection['Services']
+    end
+
     def inspection
-      @inspection ||= ::MultiJson.load(get_inspection.stdout) # Need a find
+      @inspection ||= ::MultiJson.load(get_inspection.stdout)
     end
   end
 end

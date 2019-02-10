@@ -33,9 +33,13 @@ module Serverspec::Type
 
     private
 
+    def extra_args
+      @token ? "--header 'X-Consul-Token: #{@token}'" : ''
+    end
+
     def get_inspection
-      headers = @token ? "--header 'X-Consul-Token: #{@token}'" : ''
-      command = "curl -s #{headers} #{url}"
+
+      command = curl_command
       @get_inspection ||= @runner.run_command(command)
     end
   end

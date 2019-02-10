@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
-RSpec::Matchers.define :have_label do |label|
-  chain :with_value do |value|
-    @value = value
-  end
+RSpec::Matchers.define :be_labeled do |label|
+
 
   match do |actual|
     if !@value
@@ -17,8 +15,13 @@ RSpec::Matchers.define :have_label do |label|
       "have label #{label}"
     else
       "have label #{label} with value #{@value}"
-      end
+    end
   end
+
+  chain :with_value do |value|
+    @value = value
+  end
+
   failure_message do |actual|
     if !@value
       "expected #{actual.labels} to have key #{label}"
@@ -27,3 +30,5 @@ RSpec::Matchers.define :have_label do |label|
     end
   end
 end
+RSpec::Matchers.alias_matcher :have_label, :be_labeled
+RSpec::Matchers.alias_matcher :be_labelled, :be_labeled

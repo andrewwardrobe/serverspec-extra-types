@@ -13,6 +13,74 @@ module Serverspec::Type
       inspection['Id']
     end
 
+    def has_scope?(scope)
+      self.scope == scope
+    end
+
+    def scope
+      inspection['Scope']
+    end
+
+    def local_scoped?
+      scope == 'local'
+    end
+
+    def swarm_scoped?
+      scope == 'swarm'
+    end
+
+    def attachable?
+      inspection['Scope']
+    end
+
+    def overlay?
+      self.has_driver? 'overlay'
+    end
+
+    def bridge?
+      self.has_driver? 'bridge'
+    end
+
+    def driver
+      inspection['Driver']
+    end
+
+    def has_driver?(driver)
+      self.driver == driver
+    end
+
+    def has_label?(label, value = nil)
+      if value
+        label(label)[1] == value
+      else
+        label(label)
+      end
+    end
+
+    def label(label)
+      labels.find { |key, _val| key == label }
+    end
+
+    def labels
+      inspection['Labels']
+    end
+
+    def IPv6_enabled?
+      inspection['EnableIPv6']
+    end
+
+    def internal?
+      inspection['Internal']
+    end
+
+    def external?
+      !inspection['Internal']
+    end
+
+    def ingress?
+      inspection['Ingress']
+    end
+
     private
 
     def get_inspection

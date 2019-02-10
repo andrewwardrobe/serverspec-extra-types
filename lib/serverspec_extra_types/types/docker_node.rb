@@ -6,6 +6,15 @@ module Serverspec::Type
       availability == 'active'
     end
 
+    def draining?
+      availability == 'drain'
+    end
+
+    def paused?
+      availability == 'pause'
+    end
+
+
     def availability
       inspection['Spec']['Availability']
     end

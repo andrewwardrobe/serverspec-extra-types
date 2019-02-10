@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 3.8.0'
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'simplecov'
-  spec.add_development_dependency 'serverspec_launcher', '~> 0.3.1'
+  spec.add_development_dependency 'serverspec_launcher', '~> 0.3.0'
   spec.add_development_dependency  'rspec-collection_matchers'
   spec.add_development_dependency  'rest-client'
   spec.add_development_dependency 'docker-swarm-sdk'

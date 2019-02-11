@@ -3,8 +3,9 @@
 require 'serverspec'
 
 module Serverspec::Type
-  # This class  monkey patches serverspec's docker container type with some more method to be used in matchers
+
   class DockerNetwork < DockerBase
+
     def name
       inspection['Name']
     end

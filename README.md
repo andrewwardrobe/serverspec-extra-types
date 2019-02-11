@@ -426,6 +426,131 @@ describe docker_container('focused_currie') do
 end
 ```
 
+
+
+### docker_node <a name="docker_node" ></a>
+
+##### exist
+Check if docker node exists
+```ruby
+describe docker_node('somehost') do
+  it { should exist }
+end
+```
+
+##### be_manager / be_a_manager
+Check if docker node is a manager node
+```ruby
+describe docker_node(`hostname -f`.chomp) do
+  it { should be_a_manager }
+end
+```
+
+##### be_worker / be_a_worker
+Check if docker node exists
+```ruby
+describe docker_node('somehost') do
+  it { should be_a_worker }
+end
+```
+
+##### have_engine_version
+Check engine version
+```ruby
+describe docker_node('somehost') do
+  it { should have_engine_version '18.09.1' }
+end
+```
+
+##### be_active
+Check if node is active
+```ruby
+describe docker_node('somehost') do
+  it { should be_active }
+end
+```
+
+##### be_draining
+Check if node is draining
+
+```ruby
+describe docker_node('somehost') do
+  it { should be_draining }
+end
+```
+
+##### be_paused
+Check if node is paused
+```ruby
+describe docker_node('somehost') do
+  it { should be_paused }
+end
+```
+
+### docker_network <a name="docker_network" ></a>
+
+##### exist
+Check if network exists
+```ruby
+describe docker_network('test_network') do
+  it { should exist }
+end
+```
+##### be_attachable
+Check if network is attachable
+```ruby
+describe docker_network('test_network') do
+  it { should be_attachable }
+end
+```
+##### be_swarm_scoped
+Check if network is swarm scoped
+```ruby
+describe docker_network('test_network') do
+  it { should be_swarm_scoped }
+end
+```
+
+##### have_driver
+Check if network uses a specific driver
+```ruby
+describe docker_network('test_network') do
+  it { should have_driver('overlay') }
+end
+```
+
+##### be_overlay
+Check if network is an overlay network
+```ruby
+describe docker_network('test_network') do
+  it { should be_overlay }
+end
+```
+
+##### be_internal
+Check if network is internal
+```ruby
+describe docker_network('test_network') do
+  it { should_not be_internal }
+end
+```
+
+##### be_ingress
+Check if network is an ingress network
+```ruby
+describe docker_network('test_network') do
+  it { should_not be_ingress }
+end
+```
+
+##### be_IPv6_enabled
+Check if network is IPv6 enabled
+```ruby
+describe docker_network('test_network') do
+  it { should_not be_IPv6_enabled }
+end
+```
+
 ### docker_secret <a name="docker_secret"></a>
 
 ##### exists
@@ -602,69 +727,7 @@ describe docker_service('my-awesome-service') do
 end
 ```
 
-### docker_network <a name="docker_network" ></a>
 
-_TODO_
-
-
-### docker_node <a name="docker_node" ></a>
-
-##### exist
-Check if docker node exists
-```ruby
-describe docker_node('somehost') do
-  it { should exist }
-end
-```
-
-##### be_manager / be_a_manager
-Check if docker node is a manager node
-```ruby
-describe docker_node(`hostname -f`.chomp) do
-  it { should be_a_manager }
-end
-```
-
-##### be_worker / be_a_worker
-Check if docker node exists
-```ruby
-describe docker_node('somehost') do
-  it { should be_a_worker }
-end
-```
-
-##### have_engine_version
-Check engine version
-```ruby
-describe docker_node('somehost') do
-  it { should have_engine_version '18.09.1' }
-end
-```
-
-##### be_active
-Check if node is active
-```ruby
-describe docker_node('somehost') do
-  it { should be_active }
-end
-```
-
-##### be_draining
-Check if node is draining
-
-```ruby
-describe docker_node('somehost') do
-  it { should be_draining }
-end
-```
-
-##### be_paused
-Check if node is paused
-```ruby
-describe docker_node('somehost') do
-  it { should be_paused }
-end
-```
 ### jenkins_credential <a name="jenkins_credential" ></a>
 <sub><sup>Please note: This type requires curl to be installed on the target host</sup></sub>
 

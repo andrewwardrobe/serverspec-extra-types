@@ -9,6 +9,7 @@ RSpec.context 'Docker Service' do
   end
 
   describe docker_network('test_network') do
+    it { should exist }
     it { should be_attachable }
     it { should be_swarm_scoped }
     it { should have_driver('overlay') }

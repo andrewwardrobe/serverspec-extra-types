@@ -8,7 +8,8 @@ module Serverspec
     module Type
       types = %w[docker_service docker_node rabbitmq_vhost_policy rabbitmq_node_list rabbitmq_vhost_list
                  rabbitmq_user_permission consul_service consul_service_list consul_node consul_node_list
-                 curl nfs_export jenkins_credential jenkins_job jenkins_plugin sudo_user docker_network]
+                 curl nfs_export jenkins_credential jenkins_job jenkins_plugin sudo_user docker_network
+                 docker_config docker_secret]
 
       types.each do |type|
         require "serverspec_extra_types/types/#{type}"

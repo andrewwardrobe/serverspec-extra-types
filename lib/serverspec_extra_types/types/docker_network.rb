@@ -81,6 +81,10 @@ module Serverspec::Type
       inspection['Ingress']
     end
 
+    def exist?
+      get_inspection.success?
+    end
+
     private
 
     def get_inspection

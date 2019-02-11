@@ -43,6 +43,9 @@ module Serverspec::Type
       inspection['Description']['Engine']['EngineVersion']
     end
 
+    def exist?
+      get_inspection.success?
+    end
     private
 
     def get_inspection

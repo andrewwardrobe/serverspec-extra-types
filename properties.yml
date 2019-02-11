@@ -41,13 +41,21 @@ targets:
     backend: exec
     spec_type: curl
 
+  secret:
+    backend: exec
+    spec_type: docker_secret
+
+  config:
+    backend: exec
+    spec_type: docker_config
+
   sudo:
     backend: docker
-    docker_build_dir: spec/helpers
+    docker_build_dir: spec/resources
     spec_type: sudo
 
 
   sudo_user:
     backend: docker
-    docker_build_dir: spec/helpers
+    docker_build_dir: spec/resources
     spec_type: sudo_user

@@ -3,6 +3,7 @@ require 'docker-swarm-sdk'
 require_relative './hash_helper'
 
 module SwarmHelper
+  include NetworkHelper
 
   def engine_version
     `docker info -f '{{ .ServerVersion }}'`.chomp
@@ -10,7 +11,8 @@ module SwarmHelper
 
   def attach_swarm
     @master_connection = Docker::Swarm::Connection.new('unix:///var/run/docker.sock')
-    swarm_init_options = { "ListenAddr" => "0.0.0.0:2377", 'AdvertiseAddr' => 'enp0s8:2377' }
+
+    swarm_init_options = { "ListenAddr" => "0.0.0.0:2377", 'AdvertiseAddr' => "#{default_nic}:2377" }
     begin
       @swarm = Docker::Swarm::Swarm.swarm(@master_connection)
     rescue Excon::Error::ServiceUnavailable => su
@@ -48,23 +50,26 @@ module SwarmHelper
   end
 
 
-  def create_secret(name:, data: 'VEhJUyBJUyBOT1QgQSBSRUFMIENFUlRJRklDQVRFCg==', filename: name)
+  def create_secret(name:, data: 'VEhJUyBJUyBOT1QgQSBSRUFMIENFUlRJRklDQVRFCg==', filename: name, labels: {})
     body = {
         "Name": name,
-        "Data": data
+        "Data": data,
+        "Labels": labels
     }
     resp = @master_connection.post('/secrets/create', {}, body: body.to_json, full_response: true, expects: [201, 409, 500, 503])
-    {"SecretID": JSON.parse(resp[:body])['ID'], "SecretName": name, "File": { Name: filename } }
+    {"SecretID": JSON.parse(resp[:body])['ID'], "SecretName": name, "File": { Name: filename }, }
   end
 
-  def create_config(name:, data: 'VEhJUyBJUyBOT1QgQSBSRUFMIENFUlRJRklDQVRFCg==', filename: name)
+  def create_config(name:, data: 'VEhJUyBJUyBOT1QgQSBSRUFMIENFUlRJRklDQVRFCg==', filename: name, labels: {})
     body = {
         "Name": name,
-        "Data": data
+        "Data": data,
+        "Labels": labels
     }
     resp = @master_connection.post('/configs/create', {}, body: body.to_json, full_response: true, expects: [201, 409, 500, 503])
     {"ConfigID": JSON.parse(resp[:body])['ID'], "ConfigName": name, "File": { Name: filename } }
   end
+
   private
 
   def default_service_options
@@ -122,4 +127,6 @@ module SwarmHelper
       return swarm
     end
   end
+
+
 end

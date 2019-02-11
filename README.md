@@ -36,8 +36,8 @@ require 'serverspec-extra-types'
 [curl](#curl) | 
 [consul_node](#consul_node) | [consul_node_list](#consul_node_list) | [consul_service](#consul_service) | 
 [consul_service_list](#consul_service_list) | 
-[docker_container](#docker_container) | [docker_network](#docker_network)  | [docker_node](#docker_node) |
-[docker_service](#docker_service) |
+[docker_config](#docker_config) | [docker_container](#docker_container) | [docker_network](#docker_network) | 
+[docker_node](#docker_node) | [docker_secret](#docker_secret) | [docker_service](#docker_service) | 
 [jenkins_credential](#jenkins_credential) |[jenkins_job](#jenkins_job) | [jenkins_plugin](#jenkins_plugin) | 
 [nfs_export](#nfs_export) | 
 [rabbitmq_node_list](#rabbitmq_node_list) | [rabbitmq_user_permission](#rabbitmq_user_permission) | 
@@ -244,6 +244,52 @@ end
 ```
 <sub><sup>Supports the same additional parameters as the curl matcher</sup></sub>
 
+### docker_config <a name="docker_config"></a>
+
+##### exists
+Check if config exists
+```ruby
+  describe docker_config('test.conf') do
+    it { should exist }
+  end
+```
+
+##### have_name
+Check if config has a specific name
+```ruby
+  describe docker_config('test.conf') do
+    it { should have_name 'test.conf' }
+  end
+```
+
+##### have_data
+Check if config data matches a string
+```ruby
+  describe docker_config('test.conf') do
+    it { should have_data 'Some config data' }
+  end
+```
+
+
+##### have_data64
+Check if config base64 encoded data matches a string
+```ruby
+  describe docker_config('test.conf') do
+    it { should have_data64 'U29tZSBjb25maWcgZGF0YQ=='}
+  end
+```
+
+
+##### be_labeled /be_labelled
+Check if config has a specific label
+```ruby
+  describe docker_config('test.conf') do
+    it { should have_label('some.label.key') }
+    # Check for value 
+    it { should have_label('some.label.key').with_value('value') }
+  end
+```
+
 ### docker_container <a name="docker_container"></a>
 Extension of the serverspec docker container type, and provides the following matchers:
 
@@ -379,6 +425,35 @@ describe docker_container('focused_currie') do
   it { should publishes_all_ports }
 end
 ```
+
+### docker_secret <a name="docker_secret"></a>
+
+##### exists
+Check if secret exists
+```ruby
+  describe docker_secret('secret.key') do
+    it { should exist }
+  end
+```
+
+##### have_name
+Check if secret has a specific name
+```ruby
+  describe docker_secret('secret.key') do
+    it { should have_name 'secret.key' }
+  end
+```
+
+##### be_labeled /be_labelled
+Check if secret has a specific label
+```ruby
+  describe docker_secret('secret.key') do
+    it { should have_label('some.label.key') }
+    # Check for value 
+    it { should have_label('some.label.key').with_value('value') }
+  end
+```
+
 
 ### docker_service
 ##### exist

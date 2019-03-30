@@ -8,7 +8,6 @@ RSpec.context 'Docker Config' do
     create_config name: 'test.conf', data: Base64.encode64('Some config data'), labels: { "some.label.key": "value" }
   end
 
-  # Todo: Documentation for this
   describe docker_config('test.conf') do
     it { should exist }
     it { should have_name 'test.conf' }

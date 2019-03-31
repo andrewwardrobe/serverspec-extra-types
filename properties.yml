@@ -59,3 +59,9 @@ targets:
     backend: docker
     docker_build_dir: spec/resources
     spec_type: sudo_user
+
+  jenkins_plugin:
+    backend: exec
+    spec_type: jenkins_plugin
+    variables:
+      jenkins_url: http://localhost:38080

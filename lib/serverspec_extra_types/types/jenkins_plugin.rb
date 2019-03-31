@@ -16,8 +16,13 @@ module Serverspec::Type
       @inspection ||= ::MultiJson.load(get_inspection.stdout)['plugins'].find { |plugin| plugin['shortName'] == @name }
     end
 
-    def installed?
-      inspection != nil
+    def installed?(provider = nil, version = nil)
+      if version
+        !inspection.nil? && inspection['version'].to_s == version.to_s
+      else
+        !inspection.nil?
+      end
+
     end
 
     def exist?

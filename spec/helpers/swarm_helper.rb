@@ -1,6 +1,7 @@
 require 'docker'
 require 'docker-swarm-sdk'
 require_relative './hash_helper'
+require_relative './network_helper'
 
 module SwarmHelper
   include NetworkHelper

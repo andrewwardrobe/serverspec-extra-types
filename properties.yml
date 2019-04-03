@@ -51,11 +51,11 @@ targets:
 
   sudo:
     backend: docker
-    docker_build_dir: spec/resources
+    docker_build_dir: spec/resources/dockerfiles/sudo
     spec_type: sudo
 
 
   sudo_user:
     backend: docker
-    docker_build_dir: spec/resources
+    docker_build_dir: spec/resources/dockerfiles/sudo
     spec_type: sudo_user

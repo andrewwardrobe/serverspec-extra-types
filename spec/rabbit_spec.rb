@@ -20,6 +20,8 @@ RSpec.context 'RabbitMQ Matchers' do
     it { should have_ha_nodes 2 }
     it { should have_ha_sync_mode 'automatic' }
     it { should mirror_all }
+    it { should apply_to 'all' }
+    # TODO: tests for exchanges and queues
   end
 
   describe rabbitmq_node_list do

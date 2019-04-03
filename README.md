@@ -749,25 +749,117 @@ _TODO_
 
 ### rabbitmq_node_list <a name="rabbitmq_node_list" ></a>
 <sub><sup>Please note: This type requires curl to be installed on the target host</sup></sub>
-
-_TODO_
+#### have_count
+Verifies the number of nodes in the node list
+```ruby
+describe rabbitmq_node_list do
+  it { should have_count(1) }
+end
+```
 <sub><sup>Supports the same additional parameters as the curl matcher</sup></sub>
 ### rabbitmq_user_permission <a name="rabbitmq_user_permission" ></a>
 <sub><sup>Please note: This type requires curl to be installed on the target host</sup></sub>
+#### read_from_queue(vhost, queue)
+Verifies that the user can read from the specifed queue on the specified vhost
+```ruby
+describe rabbitmq_user_permission('MyUser') do
+  it { should read_from_queue('MyVhost', 'Q1') }
+end
+```
 
-_TODO_
+#### write_to_queue(vhost, queue)
+Verifies that the user can read from the specifed queue on the specified vhost
+```ruby
+describe rabbitmq_user_permission('MyUser') do
+  it { should write_to_queue('MyVhost', 'Q1')  }
+end
+```
+
+#### configure_queue(vhost, queue)
+Verifies that the user can configure the specified queue on the specified vhost
+```ruby
+describe rabbitmq_user_permission('MyUser') do
+  it { should configure_queue('MyVhost', 'Q1') }
+end
+```
+
 <sub><sup>Supports the same additional parameters as the curl matcher</sup></sub>
 
 ### rabbitmq_vhost_list <a name="rabbitmq_vhost_list" ></a>
 <sub><sup>Please note: This type requires curl to be installed on the target host</sup></sub>
 
-_TODO_
+#### have_vhost(vhost)
+Verifies that the vhost_list contains the specified vhost
+```ruby
+describe rabbitmq_vhost_list do
+  it { should have_vhost('MyVhost') }
+end
+```
 <sub><sup>Supports the same additional parameters as the curl matcher</sup></sub>
 
-### rabbitmq_vhost_policy <a name="rabbitmq_node_policy" ></a>
+### rabbitmq_vhost_policy(policy, vhost) <a name="rabbitmq_vhost_policy" ></a>
 <sub><sup>Please note: This type requires curl to be installed on the target host</sup></sub>
+#### exists
+Verifies that the specified policy exists on a given vhost
+```ruby
+describe rabbitmq_vhost_policy('ha-all', 'MyVhost') do
+  it { should exist }
+end
+```
 
-_TODO_
+#### have_ha_mode(mode)
+Verifies the high availability mode
+```ruby
+describe rabbitmq_vhost_policy('ha-all', 'MyVhost') do
+  it { should have_ha_mode 'exactly' }
+end
+```
+#### have_ha_nodes(count)
+Verifies the number of high availability nodes
+```ruby
+describe rabbitmq_vhost_policy('ha-all', 'MyVhost') do
+  it { should have_ha_nodes 2 }
+end
+```
+#### have_ha_sync_mode(mode)
+Verifies the high availability syncronisation mode
+```ruby
+describe rabbitmq_vhost_policy('ha-all', 'MyVhost') do
+  it { should have_ha_sync_mode 'automatic' }
+end
+```
+#### apply_to(type)
+Verifies that the policy is applies to *type*
+```ruby
+describe rabbitmq_vhost_policy('ha-all', 'MyVhost') do
+  it { should apply_to }
+end
+```
+
+#### mirror_exchanges
+Verifies the policy applies to onlyexchanges
+```ruby
+describe rabbitmq_vhost_policy('ha-all', 'MyVhost') do
+  it { should mirror_exchanges }
+end
+```
+
+#### mirror_queues
+Verifies the policy applies to both queues and exchanges
+```ruby
+describe rabbitmq_vhost_policy('ha-all', 'MyVhost') do
+  it { should mirror_queues }
+end
+```
+
+#### mirror_all
+Verifies the policy applies to both queues and exchanges
+```ruby
+describe rabbitmq_vhost_policy('ha-all', 'MyVhost') do
+  it { should mirror_all }
+end
+```
+
 <sub><sup>Supports the same additional parameters as the curl matcher</sup></sub>
 
 ### sudo_user <a name="sudo_user" ></a>

@@ -50,7 +50,19 @@ module Serverspec::Type
     end
 
     def mirror_all?
-      inspection['apply-to'] == 'all'
+      apply_to?('all')
+    end
+
+    def mirror_queues?
+      apply_to?('queues')
+    end
+
+    def mirror_exchanges?
+      apply_to?('exchanges')
+    end
+
+    def apply_to?(arg)
+      inspection['apply-to'] == arg
     end
 
     # TODO: priority method and matcher

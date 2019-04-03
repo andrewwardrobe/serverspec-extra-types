@@ -1,4 +1,4 @@
-FROM debian:8-slim
+FROM debian:9-slim
 
 RUN apt-get update && apt-get -y install sudo
 

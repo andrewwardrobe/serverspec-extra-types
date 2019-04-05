@@ -743,9 +743,35 @@ _TODO_
 
 _TODO_
 <sub><sup>Supports the same additional parameters as the curl matcher</sup></sub>
-### nfs_export <a name="nfs_export" ></a>
+### nfs_export(export) <a name="nfs_export" ></a>
+#### exist
+Verifies that the specified export exists
+```ruby
+describe nfs_export('/var/nfsroot') do
+  it { should exist }
+  it { should have_host('192.168.1.0/16') }
+  it { should have_host('192.168.1.0/16').with_option('root_squash') }
+  it { should have_host('192.168.1.0/16').with_options('rw,root_squash') }
+  it { should have_host('192.168.1.0/16').with_options(%q[rw root_squash subtree_check]) }
+end
+```
+#### have_host
+Verifies that the specified export has permission for the specified host/cidr range
 
-_TODO_
+Supports a with_option matcher to verify if the export has a specifed export option
+Supports a with_options matcher to verify options in list format
+```ruby
+describe nfs_export('/var/nfsroot') do
+  it { should have_host('192.168.1.0/16') }
+  # Check for a specified option
+  it { should have_host('192.168.1.0/16').with_option('root_squash') }
+  # Check for a list of options as a comma delimited string (order is not important)
+  it { should have_host('192.168.1.0/16').with_options('rw,root_squash') }
+  # Check for a list of options as an array
+  it { should have_host('192.168.1.0/16').with_options(%q[rw root_squash subtree_check]) }
+end
+```
+
 
 ### rabbitmq_node_list <a name="rabbitmq_node_list" ></a>
 <sub><sup>Please note: This type requires curl to be installed on the target host</sup></sub>

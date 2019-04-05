@@ -15,9 +15,12 @@ module Serverspec::Type
       get_inspection.success?
     end
 
+
+
+
     def has_host?(host_id, option = nil)
       if option
-        host(host_id).include?(option)
+        check_options(host_id, option)
       else
         hosts.has_key?(host_id)
       end
@@ -47,5 +50,15 @@ module Serverspec::Type
       command = "grep #{@export} /etc/exports"
       @get_inspection ||= @runner.run_command(command)
     end
+
+    private
+    def check_options(host_id,opts)
+      options = opts.include?(',') ? opts.spilt(',') : opts
+      if options.is_a? Array
+        host(host_id).split(',').include?(options)
+      else
+        host(host_id).include?(options)
+      end
+   end
   end
 end

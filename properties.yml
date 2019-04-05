@@ -59,3 +59,8 @@ targets:
     backend: docker
     docker_build_dir: spec/resources/dockerfiles/sudo
     spec_type: sudo_user
+
+  nfs_export:
+    backend: docker
+    docker_build_dir: spec/resources/dockerfiles/nfs
+    spec_type: nfs_export

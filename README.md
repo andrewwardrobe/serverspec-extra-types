@@ -740,8 +740,30 @@ _TODO_
 
 ### jenkins_plugin <a name="jenkins_plugin" ></a>
 <sub><sup>Please note: This type requires curl to be installed on the target host</sup></sub>
+#### exists
+Checks if the plugin exists and is installed
+```ruby
+describe jenkins_plugin('ssh-slaves') do
+  it { should exist }
+end
+```
+#### has_version
+Check is plugin has a particular version
+```ruby
+describe jenkins_plugin('ssh-slaves') do
+  it { should have_version '1.29.4' }
+end
+```
+#### be_installed 
+Also supports be_installed from serverspec (by matcher chain not supported)
+```ruby
+describe jenkins_plugin('ssh-slaves') do
+  it { should be_installed }
+  # Supports with_version
+  it { should be_installed.with_version '1.29.4' }
+end
+```
 
-_TODO_
 <sub><sup>Supports the same additional parameters as the curl matcher</sup></sub>
 ### nfs_export(export) <a name="nfs_export" ></a>
 #### exist

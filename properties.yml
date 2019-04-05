@@ -26,8 +26,6 @@ targets:
     backend: exec
     spec_type: docker_network
 
-
-
   rabbitmq:
     backend: exec
     spec_type: rabbit
@@ -64,3 +62,9 @@ targets:
     backend: docker
     docker_build_dir: spec/resources/dockerfiles/nfs
     spec_type: nfs_export
+
+  jenkins_plugin:
+    backend: exec
+    spec_type: jenkins_plugin
+    variables:
+      jenkins_url: http://localhost:38080

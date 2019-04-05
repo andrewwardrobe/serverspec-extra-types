@@ -6,7 +6,7 @@ require_relative './hash_helper'
 
 module JenkinsHelper
   def default_options
-    {'name' => 'jenkins',
+    {'name' => "jenkins_#{Time.now.to_i}",
      'Image' => 'jenkins/jenkins:lts',
      'HostConfig' => {
          'PortBindings' => {

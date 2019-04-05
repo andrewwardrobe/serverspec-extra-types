@@ -3,7 +3,7 @@ require_relative './hash_helper'
 
 module ConsulHelper
   def default_options
-    {'name' => 'consul',
+    {'name' => "consul__#{Time.now.to_i}",
      'Image' => 'consul:latest',
      'HostConfig' => {
          'PortBindings' => {

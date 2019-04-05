@@ -55,7 +55,7 @@ class RabbitMQHelper
   end
   
   def default_options
-    {'name' => 'rabbitmq',
+    {'name' => "rabbitmq_#{Time.now.to_i}",
      'Image' => @image_name,
      'HostConfig' => {
          'PortBindings' => {

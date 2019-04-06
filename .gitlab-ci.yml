@@ -23,9 +23,74 @@ docker_sevice: &container_config
   script:
     - bundle exec rake ${RAKE_TARGET}
 
+docker_container:
+  <<: *container_config
+  variables:
+    <<: *task_variables
+    SERVERSPEC_TARGET: container
+
+docker_network:
+  <<: *container_config
+  variables:
+    <<: *task_variables
+    SERVERSPEC_TARGET: network
+
+docker_secret:
+  <<: *container_config
+  variables:
+    <<: *task_variables
+    SERVERSPEC_TARGET: secret
+
+docker_config:
+  <<: *container_config
+  variables:
+    <<: *task_variables
+    SERVERSPEC_TARGET: config
+
+docker_node:
+  <<: *container_config
+  variables:
+    <<: *task_variables
+    SERVERSPEC_TARGET: node
+
+curl:
+  <<: *container_config
+  variables:
+    <<: *task_variables
+    SERVERSPEC_TARGET: curl
 
 consul:
   <<: *container_config
   variables:
     <<: *task_variables
     SERVERSPEC_TARGET: consul
+
+rabbitmq:
+  <<: *container_config
+  variables:
+    <<: *task_variables
+    SERVERSPEC_TARGET: rabbitmq
+
+nfs_export:
+  <<: *container_config
+  variables:
+    <<: *task_variables
+    SERVERSPEC_TARGET: nfs_export
+
+sudo:
+  <<: *container_config
+  variables:
+    <<: *task_variables
+    SERVERSPEC_TARGET: sudo
+
+sudo_user:
+  <<: *container_config
+  variables:
+    <<: *task_variables
+    SERVERSPEC_TARGET: sudo_user
+
+jenkins_plugin:
+  <<: *container_config
+  variables:
+    <<: *task_variables
+    SERVERSPEC_TARGET: jenkins_plugin

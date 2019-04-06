@@ -8,6 +8,12 @@ RSpec.context 'Docker Service' do
     attach_swarm
   end
 
+  describe command('docker node ls') do
+    it '' do
+      puts subject.stdout
+    end
+  end
+
   describe docker_node(`hostname -f`.chomp) do
     it { should exist }
     it { should be_a_manager }

@@ -6,7 +6,7 @@ Rspec.context 'Jenkins Plugin' do
   include JenkinsHelper
   before(:all) do
     start_jenkins_container
-    install_jenkins_plugin('ssh-slaves', '1.29.4')
+    install_jenkins_plugin('ssh-slaves', '1.29.4', 60)
   end
 
   describe jenkins_plugin('ssh-slaves') do

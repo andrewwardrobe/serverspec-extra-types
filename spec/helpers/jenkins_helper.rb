@@ -35,13 +35,18 @@ module JenkinsHelper
   end
 
   def install_jenkins_plugin(plugin, version = 'latest', timeout = 30)
+    errCode = 0
     begin
       response = RestClient.post'http://localhost:38080/pluginManager/installNecessaryPlugins',
                                 "<jenkins><install plugin=\"#{plugin}@#{version}\" /></jenkins>"
     rescue RestClient::Found
+      errCode = 200
+    rescue RestClient::ServiceUnavailable
+      errCode = 503
     end
 
-    wait_for_plugin plugin, timeout
+    errCode = wait_for_plugin plugin, timeout
+    errCode
   end
 
   private
@@ -49,7 +54,13 @@ module JenkinsHelper
   def wait_for_plugin(pluginName, timeout = 30)
     tries = 0
     while tries < timeout * 10
+      begin
       response = RestClient.get 'http://localhost:38080/pluginManager/api/json?depth=1'
+      rescue RestClient::Found
+
+      rescue RestClient::ServiceUnavailable
+
+      end
       data = JSON.parse(response.body)
       break if data['plugins'].find { |plugin| plugin['shortName'] == pluginName }
 

@@ -14,6 +14,11 @@ RSpec.context 'RabbitMQ Matchers' do
     @rabbitMQ.create_permission('MyVhost', 'MyUser', '.*', '.*', '.*')
   end
 
+  describe command('docker ps') do
+    it '' do
+      puts subject.stdout
+    end
+  end
   describe rabbitmq_vhost_policy('ha-all', 'MyVhost') do
     it { should exist }
     it { should have_ha_mode 'exactly' }

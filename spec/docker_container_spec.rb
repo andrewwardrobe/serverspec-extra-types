@@ -4,7 +4,16 @@ require 'spec_helper'
 RSpec.context 'Docker Container' do
   include ConsulHelper
 
-
+  before(:all){
+    start_consul_container('name' => 'consul',
+        'HostConfig' => {
+        'RestartPolicy' => {'Name' => 'always', 'MaximunRetryCount' => 0},
+        'ExtraHosts' => ['leek:169.254.1.1']
+    })
+  }
+  after(:all) {
+    stop_consul_container
+  }
 
   describe docker_container('consul') do
     it { should exist }
@@ -23,15 +32,7 @@ RSpec.context 'Docker Container' do
     it { should have_environment_variable 'CONSUL_VERSION' }
     it { should have_environment_variable('HASHICORP_RELEASES').with_value('https://releases.hashicorp.com') }
     # TODO: Label Matcher
-    before(:all){
-      start_consul_container('HostConfig' => {
-          'RestartPolicy' => {'Name' => 'always', 'MaximunRetryCount' => 0},
-          'ExtraHosts' => ['leek:169.254.1.1']
-      })
-    }
-    after(:all) {
-      stop_consul_container
-    }
+
   end
 
 

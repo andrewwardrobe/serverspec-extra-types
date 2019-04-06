@@ -42,7 +42,6 @@ module Serverspec::Type
     # rubocop:disable Naming/AccessorMethodName
     def get_inspection
       command = curl_command
-      puts curl_command
       @get_inspection ||= @runner.run_command(command)
     end
   end

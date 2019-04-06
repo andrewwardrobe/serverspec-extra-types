@@ -12,6 +12,10 @@ RSpec.context 'Consul' do
   end
 
 
+  describe curl('http://localhost:8500/v1/catalog/service/consul') do
+    it { should be_OK}
+  end
+
   describe consul_service_list do
     it { should have_service 'consul' }
   end

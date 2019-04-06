@@ -18,7 +18,7 @@ RSpec.context 'Consul' do
     end
   end
 
-  describe command('curl -s http://127.0.0.1:8500/v1/catalog/service/consul') do
+  describe command('curl http://127.0.0.1:8500/v1/catalog/service/consul') do
     it 'puts' do
       puts subject.stdout
       puts subject.stderr

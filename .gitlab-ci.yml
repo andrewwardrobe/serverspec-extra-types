@@ -5,6 +5,7 @@ consul:
   variables:
     DOCKER_DRIVER: overlay2
     SERVERSPEC_TARGET: consul
+    RAKE_TARGET: serverspec:${SERVERSPEC_TARGET}
   services:
     - docker:stable-dind
   script:
@@ -12,5 +13,6 @@ consul:
       apk --update add --virtual build-dependencies build-base ruby ruby-rdoc ruby-dev ruby-irb postgresql-dev ruby-etc
       libc-dev zlib-dev linux-headers git ruby-bigdecimal ruby-io-console libstdc++ tzdata postgresql-client
       nodejs libffi-dev curl wget py-pip ruby-webrick ruby-etc
+    - gem install bundle
     - bundle install
-    - bundle exec rake serverspec:${SERVERSPEC_TARGET}
+    - bundle exec rake ${RAKE_TARGET}

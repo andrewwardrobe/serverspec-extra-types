@@ -23,7 +23,7 @@ module ConsulHelper
     )
     @consul_container.start
     @consul_id = @consul_container.id[0..10]
-    sleep(20)
+    sleep(120)
   end
 
   def stop_consul_container

@@ -11,7 +11,7 @@ module SwarmHelper
   end
 
   def attach_swarm
-    @master_connection = Docker::Swarm::Connection.new('unix:///var/run/docker.sock')
+    @master_connection = Docker::Swarm::Connection.new(ENV['DOCKER_HOST'] || 'unix:///var/run/docker.sock')
 
     swarm_init_options = { "ListenAddr" => "0.0.0.0:2377", 'AdvertiseAddr' => "#{default_nic}:2377" }
     begin

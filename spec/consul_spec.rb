@@ -11,24 +11,6 @@ RSpec.context 'Consul' do
     start_consul_container
   end
 
-  describe command('docker ps') do
-    it 'puts' do
-      puts subject.stdout
-      puts subject.stderr
-    end
-  end
-
-  describe command('curl http://docker:8500/v1/catalog/service/consul') do
-    it 'puts' do
-      puts subject.stdout
-      puts subject.stderr
-    end
-  end
-
-  describe curl('http://127.0.0.1:8500/v1/catalog/service/consul') do
-    it { should be_OK}
-  end
-
   describe consul_service_list do
     it { should have_service 'consul' }
   end

@@ -5,6 +5,7 @@ require 'rest-client'
 
 RSpec.context 'RabbitMQ Matchers' do
   before(:all) do
+    system('docker ps')
     @rabbitMQ = RabbitMQHelper.new
     @rabbitMQ.start_rabbitmq_container
     @rabbitMQ.create_vhost('MyVhost')

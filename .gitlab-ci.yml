@@ -15,6 +15,7 @@ docker_sevice: &container_config
     - docker:stable-dind
   script:
     - ip addr
+    - cat /etc/hosts
     - >
       apk --update add --virtual build-dependencies build-base ruby ruby-rdoc ruby-dev ruby-irb postgresql-dev ruby-etc
       libc-dev zlib-dev linux-headers git ruby-bigdecimal ruby-io-console libstdc++ tzdata postgresql-client

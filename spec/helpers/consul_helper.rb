@@ -3,7 +3,7 @@ require_relative './hash_helper'
 
 module ConsulHelper
   def default_options
-    {'name' => "consul__#{Time.now.to_i}",
+    {'name' => "consul_#{Time.now.to_i}",
      'Image' => 'consul:latest',
      'HostConfig' => {
          'PortBindings' => {
@@ -23,7 +23,7 @@ module ConsulHelper
     )
     @consul_container.start
     @consul_id = @consul_container.id[0..10]
-    sleep(10)
+    sleep(20)
   end
 
   def stop_consul_container

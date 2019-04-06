@@ -11,7 +11,6 @@ RSpec.context 'Consul' do
     start_consul_container
   end
 
-
   describe consul_service_list do
     it { should have_service 'consul' }
   end

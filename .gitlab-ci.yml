@@ -1,26 +1,26 @@
 variables:
   DOCKER_HOST: tcp://docker:2375
   DOCKER_DRIVER: overlay2
+services:
+  - name: docker:stable-dind
+    alias: localhost
 
 before_script:
-
+  - >
+    apk --update add --virtual build-dependencies build-base ruby ruby-rdoc ruby-dev ruby-irb postgresql-dev ruby-etc
+    libc-dev zlib-dev linux-headers git ruby-bigdecimal ruby-io-console libstdc++ tzdata postgresql-client
+    nodejs libffi-dev curl wget py-pip ruby-webrick ruby-etc
+  - gem install bundle
+  - bundle install
 
 docker_sevice: &container_config
-  image: docker:stable-dind
+  image: docker:stable
   variables: &task_variables
     DOCKER_DRIVER: overlay2
     SERVERSPEC_TARGET: service
     RAKE_TARGET: serverspec:${SERVERSPEC_TARGET}
-  services:
-    - docker:stable-dind
+
   script:
-    - ip addr
-    - >
-      apk --update add --virtual build-dependencies build-base ruby ruby-rdoc ruby-dev ruby-irb postgresql-dev ruby-etc
-      libc-dev zlib-dev linux-headers git ruby-bigdecimal ruby-io-console libstdc++ tzdata postgresql-client
-      nodejs libffi-dev curl wget py-pip ruby-webrick ruby-etc
-    - gem install bundle
-    - bundle install
     - bundle exec rake ${RAKE_TARGET}
 
 

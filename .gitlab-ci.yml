@@ -6,8 +6,6 @@ services:
     alias: localhost
 
 before_script:
-  - ip addr
-  - cat /etc/hosts
   - >
     apk --update add --virtual build-dependencies build-base ruby ruby-rdoc ruby-dev ruby-irb postgresql-dev ruby-etc
     libc-dev zlib-dev linux-headers git ruby-bigdecimal ruby-io-console libstdc++ tzdata postgresql-client
@@ -16,7 +14,7 @@ before_script:
   - bundle install
 
 docker_sevice: &container_config
-  image: docker:stable-dind
+  image: docker:stable
   variables: &task_variables
     DOCKER_DRIVER: overlay2
     SERVERSPEC_TARGET: service

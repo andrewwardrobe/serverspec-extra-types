@@ -28,6 +28,10 @@ module SwarmHelper
     @swarm.remove if @joined_swarm
   end
 
+  def node_id
+    @swarm.node_hash.keys[0]
+  end
+
   def create_service(name:, image:, **options)
     @swarm.create_service service_options(name: name, image: image, opts: options)
   end

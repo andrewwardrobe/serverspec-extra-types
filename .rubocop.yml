@@ -28,3 +28,11 @@ Naming/PredicateName:
     - 'lib/**/types/*.rb'
 
 #Naming/AccessorMethodName:
+
+Style/ClassAndModuleChildren:
+  Exclude:
+    - 'lib/**/types/*.rb'
+
+Style/FormatStringToken:
+  Exclude:
+    - 'lib/serverspec_extra_types/types/curl.rb'

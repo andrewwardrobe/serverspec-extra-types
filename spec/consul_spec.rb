@@ -11,6 +11,19 @@ RSpec.context 'Consul' do
     start_consul_container
   end
 
+  describe command('docker ps') do
+    it 'puts' do
+      puts subject.stdout
+      puts subject.stderr
+    end
+  end
+
+  describe command('curl -s http://localhost:8500/v1/catalog/service/consul') do
+    it 'puts' do
+      puts subject.stdout
+      puts subject.stderr
+    end
+  end
 
   describe curl('http://localhost:8500/v1/catalog/service/consul') do
     it { should be_OK}

@@ -1,6 +1,9 @@
 variables:
   DOCKER_HOST: tcp://docker:2375
   DOCKER_DRIVER: overlay2
+services:
+  - name: docker:stable-dind
+    alias: localhost
 
 before_script:
   - ip addr
@@ -18,8 +21,7 @@ docker_sevice: &container_config
     DOCKER_DRIVER: overlay2
     SERVERSPEC_TARGET: service
     RAKE_TARGET: serverspec:${SERVERSPEC_TARGET}
-  services:
-    - docker:stable-dind
+
   script:
     - bundle exec rake ${RAKE_TARGET}
 

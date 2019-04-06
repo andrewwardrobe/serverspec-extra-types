@@ -28,6 +28,7 @@ module Serverspec::Type
     end
 
     def inspection
+      puts get_inspection.stdout
       @inspection ||= ::MultiJson.load(get_inspection.stdout)[0]
     end
 
@@ -37,8 +38,8 @@ module Serverspec::Type
       @token ? "--header 'X-Consul-Token: #{@token}'" : ''
     end
 
+    # rubocop:disable Naming/AccessorMethodName
     def get_inspection
-
       command = curl_command
       @get_inspection ||= @runner.run_command(command)
     end

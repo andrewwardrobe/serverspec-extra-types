@@ -56,13 +56,15 @@ module JenkinsHelper
     while tries < timeout * 10
       begin
       response = RestClient.get 'http://localhost:38080/pluginManager/api/json?depth=1'
+      data = JSON.parse(response.body)
+      break if data['plugins'].find { |plugin| plugin['shortName'] == pluginName }
       rescue RestClient::Found
 
       rescue RestClient::ServiceUnavailable
 
       end
-      data = JSON.parse(response.body)
-      break if data['plugins'].find { |plugin| plugin['shortName'] == pluginName }
+
+
 
       sleep 0.1
       tries += 1

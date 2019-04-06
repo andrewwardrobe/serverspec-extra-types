@@ -1,8 +1,11 @@
+#inherit_from: .rubocop_todo.yml
+
 AllCops:
   TargetRubyVersion: 2.4
   Exclude:
     - 'serverspec-extra-types.gemspec'
     - 'util/mkcode.rb'
+    - 'bin/*'
 
 Style/Documentation:
   Enabled: false
@@ -19,3 +22,9 @@ Metrics/BlockLength:
     - 'Rakefile'
     - '**/*.rake'
     - 'spec/**/*.rb'
+
+Naming/PredicateName:
+  Exclude:
+    - 'lib/**/types/*.rb'
+
+#Naming/AccessorMethodName:

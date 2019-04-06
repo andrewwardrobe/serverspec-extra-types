@@ -1,7 +1,7 @@
 before_script:
 
 docker_sevice: &container_config
-  image: docker:stable
+  image: docker:stable-dind
   variables: &task_variables
     DOCKER_DRIVER: overlay2
     SERVERSPEC_TARGET: service

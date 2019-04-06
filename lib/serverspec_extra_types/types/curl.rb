@@ -48,6 +48,7 @@ module Serverspec::Type
       "-w \"#{output_format}\""
     end
 
+    # rubocop:disable Naming/AccessorMethodName
     def get_inspection
       command = curl_command
       unless @get_inspection
@@ -59,6 +60,7 @@ module Serverspec::Type
 
       @get_inspection
     end
+    # rubocop:enable Naming/AccessorMethodName
 
     def output_format
       out = '!!SS_URL_YAML!!---\\n'

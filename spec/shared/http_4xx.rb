@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples 'HTTP::4XX' do
   describe curl('http://localhost:18754/400') do
     it { should respond_with_400 }
@@ -178,6 +180,5 @@ shared_examples 'HTTP::4XX' do
     it { should respond_with_CLIENT_CLOSED_REQUEST }
     it { should respond_with_client_closed_request }
     it { should be_client_closed_request }
- end
+  end
 end
-

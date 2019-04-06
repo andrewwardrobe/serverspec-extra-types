@@ -9,7 +9,7 @@ module Serverspec::Type
     end
 
     def to_s
-      "RabbitMQ node list"
+      'RabbitMQ node list'
     end
 
     def inspection

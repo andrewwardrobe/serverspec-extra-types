@@ -30,16 +30,13 @@ module Serverspec::Type
       end
     end
 
-
     def ssh_private_key?
       inspection['typeName'] == 'SSH Username with private key'
     end
 
-
     def gitlab_api_token?
       inspection['typeName'] == 'GitLab API token'
     end
-
 
     def aws_credential?
       inspection['typeName'] == 'AWS Credentials'
@@ -63,10 +60,12 @@ module Serverspec::Type
 
     private
 
+    # rubocop:disable Naming/AccessorMethodName
     def get_inspection
-      userpass = @user ? "-u #{@user}:#{@password}" : ""
+      userpass = @user ? "-u #{@user}:#{@password}" : ''
       command = "curl -s  #{userpass} #{url} #{@insecure ? '-k' : ''} #{@redirects ? '-L' : ''}"
       @get_inspection ||= @runner.run_command(command)
     end
+    # rubocop:enable Naming/AccessorMethodName
   end
 end

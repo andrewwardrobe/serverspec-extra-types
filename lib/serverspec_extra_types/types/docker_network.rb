@@ -3,9 +3,7 @@
 require 'serverspec'
 
 module Serverspec::Type
-
   class DockerNetwork < DockerBase
-
     def name
       inspection['Name']
     end
@@ -35,11 +33,11 @@ module Serverspec::Type
     end
 
     def overlay?
-      self.has_driver? 'overlay'
+      has_driver? 'overlay'
     end
 
     def bridge?
-      self.has_driver? 'bridge'
+      has_driver? 'bridge'
     end
 
     def driver
@@ -66,9 +64,11 @@ module Serverspec::Type
       inspection['Labels']
     end
 
+    # rubocop:disable Naming/MethodName
     def IPv6_enabled?
       inspection['EnableIPv6']
     end
+    # rubocop:enable Naming/MethodName
 
     def internal?
       inspection['Internal']
@@ -88,8 +88,10 @@ module Serverspec::Type
 
     private
 
+    # rubocop:disable Naming/AccessorMethodName
     def get_inspection
       @get_inspection ||= @runner.run_command("docker network inspect #{@name}")
     end
+    # rubocop:enable Naming/AccessorMethodName
   end
 end

@@ -16,13 +16,12 @@ module Serverspec::Type
       @inspection ||= ::MultiJson.load(get_inspection.stdout)['plugins'].find { |plugin| plugin['shortName'] == @name }
     end
 
-    def installed?(provider = nil, version = nil)
+    def installed?(_provider = nil, version = nil)
       if version
         !inspection.nil? && inspection['version'].to_s == version.to_s
       else
         !inspection.nil?
       end
-
     end
 
     def exist?
@@ -47,14 +46,14 @@ module Serverspec::Type
       end
     end
 
-
-
     private
 
+    # rubocop:disable Naming/AccessorMethodName
     def get_inspection
       userpass = @user ? "-u #{@user}:#{@password}" : ''
       command = "curl -s  #{userpass} #{url} #{@insecure ? '-k' : ''} #{@redirects ? '-L' : ''}"
       @get_inspection ||= @runner.run_command(command)
     end
+    # rubocop:enable Naming/AccessorMethodName
   end
 end

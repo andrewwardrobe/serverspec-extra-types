@@ -17,7 +17,7 @@ module Serverspec::Type
     end
 
     def url
-      jobname = @name.gsub('/','/job/')
+      jobname = @name.gsub('/', '/job/')
       "#{@url_base}/job/#{jobname}/api/json"
     end
 
@@ -91,10 +91,9 @@ module Serverspec::Type
       inspection['fullName'] == text
     end
 
-    def has_job?(job)
+    def has_job?(_job)
       inspection['jobs'].find { |job| job['name'] == job }
     end
-
 
     def has_job_count?(count)
       inspection['jobs'].length == count
@@ -109,15 +108,17 @@ module Serverspec::Type
     end
 
     def has_empty_job_list?
-      inspection['jobs'].length == 0
+      inspection['jobs'].empty?
     end
 
     private
 
+    # rubocop:disable Naming/AccessorMethodName
     def get_inspection
-      userpass = @user ? "-u #{@user}:#{@password}" : ""
+      userpass = @user ? "-u #{@user}:#{@password}" : ''
       command = "curl -s  #{userpass} #{url} #{@insecure ? '-k' : ''} #{@redirects ? '-L' : ''}"
       @get_inspection ||= @runner.run_command(command)
     end
+    # rubocop:enable Naming/AccessorMethodName
   end
 end

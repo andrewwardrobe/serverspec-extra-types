@@ -15,16 +15,12 @@ module Serverspec::Type
       get_inspection.success?
     end
 
-
-
-
     def has_host?(host_id, option = nil)
       if option
         check_options(host_id, option)
       else
-        hosts.has_key?(host_id)
+        hosts.key?(host_id)
       end
-
     end
 
     def hosts
@@ -46,13 +42,16 @@ module Serverspec::Type
       @inspection ||= get_inspection.stdout
     end
 
+    # rubocop:disable Naming/AccessorMethodName
     def get_inspection
       command = "grep #{@export} /etc/exports"
       @get_inspection ||= @runner.run_command(command)
     end
+    # rubocop:enable Naming/AccessorMethodName
 
     private
-    def check_options(host_id,opts)
+
+    def check_options(host_id, opts)
       options = opts.include?(',') ? opts.spilt(',') : opts
       if options.is_a? Array
         host(host_id).split(',').include?(options)

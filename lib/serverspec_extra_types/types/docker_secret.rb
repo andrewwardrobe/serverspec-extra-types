@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'base64'
 module Serverspec::Type
   class DockerSecret < DockerBase
@@ -15,9 +16,8 @@ module Serverspec::Type
     end
 
     def has_data64?(data)
-      self.data64 == data
+      data64 == data
     end
-
 
     def data64
       inspection['Spec']['Data']
@@ -49,8 +49,10 @@ module Serverspec::Type
 
     private
 
+    # rubocop:disable Naming/AccessorMethodName
     def get_inspection
       @get_inspection ||= @runner.run_command("docker secret inspect #{@name}")
     end
+    # rubocop:enable Naming/AccessorMethodName
   end
 end

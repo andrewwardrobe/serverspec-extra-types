@@ -1,6 +1,6 @@
+# frozen_string_literal: true
+
 module WebserverHelper
-
-
   def start_webserver
     @thr = Thread.new do
       require 'sinatra'
@@ -13,8 +13,8 @@ module WebserverHelper
         return [params[:code].to_i, nil]
       end
 
-      Rack::Handler::WEBrick.run Sinatra::Base, Port: 18754, Logger: WEBrick::Log.new(File.open(File::NULL, 'w')),
-                                 AccessLog: []
+      Rack::Handler::WEBrick.run Sinatra::Base, Port: 18_754, Logger: WEBrick::Log.new(File.open(File::NULL, 'w')),
+                                                AccessLog: []
     end
     sleep 2
   end

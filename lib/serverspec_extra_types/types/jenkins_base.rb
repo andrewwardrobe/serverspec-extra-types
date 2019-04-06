@@ -18,6 +18,5 @@ module Serverspec::Type
     def exist?
       get_inspection.success?
     end
-
   end
 end

@@ -29,17 +29,17 @@ module Serverspec::Type
       end
     end
 
-
-
     private
 
     def extra_args
       "-u #{@user}:#{@password}"
     end
 
+    # rubocop:disable Naming/AccessorMethodName
     def get_inspection
       command = curl_command
       @get_inspection ||= @runner.run_command(command)
     end
+    # rubocop:enable Naming/AccessorMethodName
   end
 end

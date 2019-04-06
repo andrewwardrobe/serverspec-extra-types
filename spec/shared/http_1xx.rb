@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples 'HTTP::1XX' do
   describe curl('http://localhost:18754/100') do
     it { should respond_with_100 }
@@ -16,6 +18,5 @@ shared_examples 'HTTP::1XX' do
     it { should respond_with_PROCESSING }
     it { should respond_with_processing }
     it { should be_processing }
- end
+  end
 end
-

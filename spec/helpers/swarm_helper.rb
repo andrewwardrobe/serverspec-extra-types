@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'docker'
 require 'docker-swarm-sdk'
 require_relative './hash_helper'
@@ -13,7 +15,7 @@ module SwarmHelper
   def attach_swarm
     @master_connection = Docker::Swarm::Connection.new(ENV['DOCKER_HOST'] || 'unix:///var/run/docker.sock')
 
-    swarm_init_options = { "ListenAddr" => "0.0.0.0:2377", 'AdvertiseAddr' => "#{default_nic}:2377" }
+    swarm_init_options = { 'ListenAddr' => '0.0.0.0:2377', 'AdvertiseAddr' => "#{default_nic}:2377" }
     begin
       @swarm = Docker::Swarm::Swarm.swarm(@master_connection)
     rescue Excon::Error::ServiceUnavailable => su
@@ -23,9 +25,7 @@ module SwarmHelper
   end
 
   def detach_swarm
-    if @joined_swarm
-      @swarm.remove
-    end
+    @swarm.remove if @joined_swarm
   end
 
   def create_service(name:, image:, **options)
@@ -34,12 +34,12 @@ module SwarmHelper
 
   def delete_service(name)
     service = @swarm.find_service_by_name(name)
-    service.remove if service
+    service&.remove
   end
 
   def create_network(name, driver = 'overlay', attachable = true)
-    opts = {"Name": name, "Driver": driver, "Attachable": attachable, "Aliases": [name]}
-    @joined_networks = [] unless @joined_networks
+    opts = { "Name": name, "Driver": driver, "Attachable": attachable, "Aliases": [name] }
+    @joined_networks ||= []
     @joined_networks << @swarm.create_network(opts)
   end
 
@@ -50,29 +50,21 @@ module SwarmHelper
     end
   end
 
-
   def create_secret(name:, data: 'VEhJUyBJUyBOT1QgQSBSRUFMIENFUlRJRklDQVRFCg==', filename: name, labels: {})
-    body = {
-        "Name": name,
-        "Data": data,
-        "Labels": labels
-    }
+    body = { "Name": name, "Data": data, "Labels": labels }
     resp = @master_connection.post('/secrets/create', {}, body: body.to_json, full_response: true, expects: [201, 409, 500, 503])
-    {"SecretID": JSON.parse(resp[:body])['ID'], "SecretName": name, "File": { Name: filename }, }
+    { "SecretID": JSON.parse(resp[:body])['ID'], "SecretName": name, "File": { Name: filename } }
   end
 
   def create_config(name:, data: 'VEhJUyBJUyBOT1QgQSBSRUFMIENFUlRJRklDQVRFCg==', filename: name, labels: {})
-    body = {
-        "Name": name,
-        "Data": data,
-        "Labels": labels
-    }
+    body = { "Name": name, "Data": data, "Labels": labels }
     resp = @master_connection.post('/configs/create', {}, body: body.to_json, full_response: true, expects: [201, 409, 500, 503])
-    {"ConfigID": JSON.parse(resp[:body])['ID'], "ConfigName": name, "File": { Name: filename } }
+    { "ConfigID": JSON.parse(resp[:body])['ID'], "ConfigName": name, "File": { Name: filename } }
   end
 
   private
 
+  # rubocop:disable Metrics/MethodLength
   def default_service_options
     {
       mounts: [],
@@ -92,42 +84,43 @@ module SwarmHelper
       configs: []
     }
   end
+  # rubocop:enable Metrics/MethodLength
 
+  # rubocop:disable Metrics/MethodLength
   def service_options(name:, image:, opts: {})
     options = default_service_options.merge(opts)
 
-    {"Name": name,
-     "TaskTemplate": {
-       "ContainerSpec": { "Networks": [], "Image": image, "Mounts": options[:mounts], "User": options[:user],
-                          "Hosts": options[:hosts], "Secrets": options[:secrets], "Configs": options[:configs] }.reject { |k, v| v.nil?},
-       "Env": options[:environment],
-       "LogDriver": {" Name": "json-file", "Options": { "max-file": "3", "max-size": "10M"} },
-       "Placement": { "Constraints": options[:placement_constraints]},
-       "RestartPolicy": { "Condition": options[:restart_policy], "Delay": options[:restart_delay], "MaxAttempts": options[:restart_limit] },
-       "Networks": options[:networks]
-     },
-     "Mode": (options[:global] ? { "Global": {} } : {
-         "Replicated": { "Replicas": options[:replicas] },
-     }),
-     "EndpointSpec": {
-       "Ports": options[:ports]
-     },
-    "Labels": options[:labels]
-    }
+    { "Name": name,
+      "TaskTemplate": {
+        "ContainerSpec": { "Networks": [], "Image": image, "Mounts": options[:mounts], "User": options[:user],
+                           "Hosts": options[:hosts], "Secrets": options[:secrets], "Configs": options[:configs] }.reject { |_k, v| v.nil? },
+        "Env": options[:environment],
+        "LogDriver": { " Name": 'json-file', "Options": { "max-file": '3', "max-size": '10M' } },
+        "Placement": { "Constraints": options[:placement_constraints] },
+        "RestartPolicy": { "Condition": options[:restart_policy], "Delay": options[:restart_delay],
+                           "MaxAttempts": options[:restart_limit] },
+        "Networks": options[:networks]
+      },
+      "Mode": (options[:global] ? { "Global": {} } : {
+        "Replicated": { "Replicas": options[:replicas] }
+      }),
+      "EndpointSpec": {
+        "Ports": options[:ports]
+      },
+      "Labels": options[:labels] }
   end
+  # rubocop:enable Metrics/MethodLength
 
   def create_swarm(connection, swarm_init_options)
-    resp = connection.post('/swarm/init', {}, :body => swarm_init_options.to_json, full_response: true, expects: [200, 404, 406, 500])
-    if (resp.status == 200)
+    resp = connection.post('/swarm/init', {}, body: swarm_init_options.to_json, full_response: true, expects: [200, 404, 406, 500])
+    if resp.status == 200
       swarm = Docker::Swarm::Swarm.swarm(connection, swarm_init_options)
-      manager_node = swarm.nodes.find {|n|
-        (n.hash['ManagerStatus']) && (n.hash['ManagerStatus']['Leader'] == true)
-      }
+      manager_node = swarm.nodes.find do |n|
+        n.hash['ManagerStatus'] && (n.hash['ManagerStatus']['Leader'] == true)
+      end
       listen_address = manager_node.hash['ManagerStatus']['Addr']
       swarm.store_manager(connection, listen_address)
       return swarm
     end
   end
-
-
 end

@@ -75,7 +75,7 @@ module Serverspec::Type
 
     def has_secret?(name, target = nil)
       if target
-        secrets.find { |secret| secret['SecretName'] == name && secret['File']['Name'] == target}
+        secrets.find { |secret| secret['SecretName'] == name && secret['File']['Name'] == target }
       else
         secrets.find { |secret| secret['SecretName'] == name }
       end
@@ -168,9 +168,11 @@ module Serverspec::Type
 
     private
 
+    # rubocop:disable Naming/AccessorMethodName
     def get_inspection
       @get_inspection ||= @runner.run_command("docker service inspect #{@name}")
     end
+    # rubocop:enable Naming/AccessorMethodName
   end
 end
 

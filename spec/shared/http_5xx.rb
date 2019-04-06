@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples 'HTTP::5XX' do
   describe curl('http://localhost:18754/500') do
     it { should respond_with_500 }
@@ -70,6 +72,5 @@ shared_examples 'HTTP::5XX' do
     it { should respond_with_NETWORK_CONNECT_TIMEOUT_ERROR }
     it { should respond_with_network_connect_timeout_error }
     it { should be_network_connect_timeout_error }
- end
+  end
 end
-

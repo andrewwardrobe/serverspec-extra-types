@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 RSpec::Matchers.define :be_labeled do |label|
-
-
   match do |actual|
     if !@value
       actual.labels.key? label

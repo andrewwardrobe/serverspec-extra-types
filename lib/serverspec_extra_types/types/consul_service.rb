@@ -19,7 +19,6 @@ module Serverspec::Type
       @inspection ||= ::MultiJson.load(get_inspection.stdout)[0]
     end
 
-
     ##= Generated Code Start =##
     # TODO: Make these better
     # Key Type: String
@@ -63,7 +62,7 @@ module Serverspec::Type
       inspection['TaggedAddresses']
     end
 
-    # Todo: do method for indiviual tagged addresses
+    # TODO: do method for indiviual tagged addresses
     def has_tagged_addresses?(tagged_addresses)
       self.tagged_addresses == tagged_addresses
     end
@@ -127,7 +126,7 @@ module Serverspec::Type
       inspection['ServiceWeights']
     end
 
-    # Todo: do method for indiviual service weight are well as passing/warning
+    # TODO: do method for indiviual service weight are well as passing/warning
     def has_service_weights?(service_weights)
       self.service_weights == service_weights
     end
@@ -204,6 +203,5 @@ module Serverspec::Type
       self.modify_index == modify_index
     end
     ##= Generated Code End   =##
-
   end
 end

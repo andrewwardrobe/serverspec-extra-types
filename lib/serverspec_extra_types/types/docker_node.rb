@@ -14,7 +14,6 @@ module Serverspec::Type
       availability == 'pause'
     end
 
-
     def availability
       inspection['Spec']['Availability']
     end
@@ -46,10 +45,13 @@ module Serverspec::Type
     def exist?
       get_inspection.success?
     end
+
     private
 
+    # rubocop:disable Naming/AccessorMethodName
     def get_inspection
       @get_inspection ||= @runner.run_command("docker node inspect #{@name}")
     end
+    # rubocop:enable Naming/AccessorMethodName
   end
 end

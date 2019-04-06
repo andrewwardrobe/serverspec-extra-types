@@ -26,7 +26,6 @@ module Serverspec::Type
       @url_base
     end
 
-
     def inspection
       @inspection ||= ::MultiJson.load(get_inspection.stdout)
     end
@@ -34,16 +33,18 @@ module Serverspec::Type
     private
 
     def extra_args
-      ""
+      ''
     end
 
     def curl_command
       "curl #{extra_args} -s #{url} #{@insecure ? '-k' : ''} #{@redirects ? '-L' : ''}"
     end
 
+    # rubocop:disable Naming/AccessorMethodName
     def get_inspection
       command = curl_command
       @get_inspection ||= @runner.run_command(command)
     end
+    # rubocop:enable Naming/AccessorMethodName
   end
 end

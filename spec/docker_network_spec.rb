@@ -1,5 +1,6 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
+require 'spec_helper'
 
 RSpec.context 'Docker Service' do
   include SwarmHelper
@@ -19,9 +20,8 @@ RSpec.context 'Docker Service' do
     it { should_not be_IPv6_enabled }
   end
 
-  after(:all){
+  after(:all) do
     delete_networks
     detach_swarm
-  }
-
+  end
 end

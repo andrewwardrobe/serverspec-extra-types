@@ -33,16 +33,11 @@ class RabbitMQHelper
     resource.put policy.to_json
   end
 
-
-  
-
   def start_rabbitmq_container(opts = {})
     options = default_options.deep_merge opts
-    unless Docker::Image.exist? @image_name
-      Docker::Image.create('fromImage' => @image_name, 'Ports' => [])
-    end
+    Docker::Image.create('fromImage' => @image_name, 'Ports' => []) unless Docker::Image.exist? @image_name
     @rabbitmq_container = Docker::Container.create(
-        options
+      options
     )
     @rabbitmq_container.start
     @rabbitmq_id = @rabbitmq_container.id[0..10]
@@ -53,15 +48,15 @@ class RabbitMQHelper
     @rabbitmq_container.stop
     @rabbitmq_container.delete
   end
-  
+
   def default_options
-    {'name' => "rabbitmq_#{Time.now.to_i}",
-     'Image' => @image_name,
-     'HostConfig' => {
-         'PortBindings' => {
-             '15672/tcp' => [{ 'HostPort' => '15672' }]
-         }
-     },
-     'Hostname' => 'rabbitmq'}
+    { 'name' => "rabbitmq_#{Time.now.to_i}",
+      'Image' => @image_name,
+      'HostConfig' => {
+        'PortBindings' => {
+          '15672/tcp' => [{ 'HostPort' => '15672' }]
+        }
+      },
+      'Hostname' => 'rabbitmq' }
   end
 end

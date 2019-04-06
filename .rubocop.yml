@@ -1,3 +1,5 @@
+inherit_from: .rubocop_todo.yml
+
 #inherit_from: .rubocop_todo.yml
 
 AllCops:
@@ -6,6 +8,7 @@ AllCops:
     - 'serverspec-extra-types.gemspec'
     - 'util/mkcode.rb'
     - 'bin/*'
+    - 'spec/helpers/hash_helper.rb'
 
 Style/Documentation:
   Enabled: false
@@ -32,7 +35,9 @@ Naming/PredicateName:
 Style/ClassAndModuleChildren:
   Exclude:
     - 'lib/**/types/*.rb'
+    - 'spec/sudo_user_spec.rb'
 
 Style/FormatStringToken:
   Exclude:
     - 'lib/serverspec_extra_types/types/curl.rb'
+

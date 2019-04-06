@@ -1,30 +1,28 @@
+# frozen_string_literal: true
+
 require 'docker'
 require 'json'
 require 'rest-client'
 require_relative './hash_helper'
 
-
 module JenkinsHelper
   def default_options
-    {'name' => "jenkins_#{Time.now.to_i}",
-     'Image' => 'jenkins/jenkins:lts',
-     'HostConfig' => {
-         'PortBindings' => {
-             '8080/tcp' => [{ 'HostPort' =>'38080' }]
-         }
-     },
-     'Hostname' => 'jenkins',
-     'Env' => ['JAVA_OPTS=-Djenkins.install.runSetupWizard=false']
-    }
+    { 'name' => "jenkins_#{Time.now.to_i}",
+      'Image' => 'jenkins/jenkins:lts',
+      'HostConfig' => {
+        'PortBindings' => {
+          '8080/tcp' => [{ 'HostPort' => '38080' }]
+        }
+      },
+      'Hostname' => 'jenkins',
+      'Env' => ['JAVA_OPTS=-Djenkins.install.runSetupWizard=false'] }
   end
 
   def start_jenkins_container(opts = {})
     options = default_options.deep_merge opts
-    unless Docker::Image.exist? options['Image']
-      Docker::Image.create('fromImage' => options['Image'], 'Ports' => [])
-    end
+    Docker::Image.create('fromImage' => options['Image'], 'Ports' => []) unless Docker::Image.exist? options['Image']
     @jenkins_container = Docker::Container.create(
-        options
+      options
     )
     @jenkins_container.start
     @jenkins_id = @jenkins_container.id[0..10]
@@ -38,12 +36,12 @@ module JenkinsHelper
 
   def install_jenkins_plugin(plugin, version = 'latest', timeout = 30)
     begin
-      response = RestClient.post'http://localhost:38080/pluginManager/installNecessaryPlugins', "<jenkins><install plugin=\"#{plugin}@#{version}\" /></jenkins>"
+      response = RestClient.post'http://localhost:38080/pluginManager/installNecessaryPlugins',
+                                "<jenkins><install plugin=\"#{plugin}@#{version}\" /></jenkins>"
     rescue RestClient::Found
     end
 
     wait_for_plugin plugin, timeout
-
   end
 
   private
@@ -53,9 +51,10 @@ module JenkinsHelper
     while tries < timeout * 10
       response = RestClient.get 'http://localhost:38080/pluginManager/api/json?depth=1'
       data = JSON.parse(response.body)
-      break if data['plugins'].find {|plugin| plugin['shortName'] == pluginName}
+      break if data['plugins'].find { |plugin| plugin['shortName'] == pluginName }
+
       sleep 0.1
-      tries = tries + 1
+      tries += 1
     end
   end
 end

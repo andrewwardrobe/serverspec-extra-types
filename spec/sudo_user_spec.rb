@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'serverspec_extra_types/types/sudo_user'
 
@@ -15,7 +17,7 @@ context 'sudo user type' do
           Matching Defaults entries for user1 on a03e5c9c0992:
               env_reset, mail_badpass,
               secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin
-          
+
           User user1 may run the following commands on a03e5c9c0992:
               (ALL : ALL) ALL
               (group3) NOPASSWD: ALL
@@ -33,31 +35,31 @@ context 'sudo user type' do
       @su = Serverspec::Type::SudoUser.new('user1')
     end
 
-    it "should be able to split types with a host in  group" do
-      expect(@su.inspection[:permissions][0][:command]).to eq "ALL"
+    it 'should be able to split types with a host in  group' do
+      expect(@su.inspection[:permissions][0][:command]).to eq 'ALL'
     end
 
-    it "should be able to split types with NOPASSWD" do
-      expect(@su.inspection[:permissions][1][:command]).to eq "ALL"
+    it 'should be able to split types with NOPASSWD' do
+      expect(@su.inspection[:permissions][1][:command]).to eq 'ALL'
     end
-    it "should be able to split types with a single group" do
-      expect(@su.inspection[:permissions][2][:command]).to eq "ALL"
-    end
-
-    it "should be able to split types with parameterized command" do
-      expect(@su.inspection[:permissions][3][:command]).to eq "/usr/bin/leek leek"
+    it 'should be able to split types with a single group' do
+      expect(@su.inspection[:permissions][2][:command]).to eq 'ALL'
     end
 
-    it "should be able to split types with parameterized command and no passwd" do
-      expect(@su.inspection[:permissions][4][:command]).to eq "/usr/bin/leek sheek"
+    it 'should be able to split types with parameterized command' do
+      expect(@su.inspection[:permissions][3][:command]).to eq '/usr/bin/leek leek'
     end
 
-    it "should be able to split types with host in group, parameterized command and no passwd" do
-      expect(@su.inspection[:permissions][5][:command]).to eq "/usr/bin/leek meek"
+    it 'should be able to split types with parameterized command and no passwd' do
+      expect(@su.inspection[:permissions][4][:command]).to eq '/usr/bin/leek sheek'
     end
 
-    it "should set a host when user has : in it" do
-      expect(@su.inspection[:permissions][0][:group]).to eq "ALL"
+    it 'should be able to split types with host in group, parameterized command and no passwd' do
+      expect(@su.inspection[:permissions][5][:command]).to eq '/usr/bin/leek meek'
+    end
+
+    it 'should set a host when user has : in it' do
+      expect(@su.inspection[:permissions][0][:group]).to eq 'ALL'
     end
   end
 end

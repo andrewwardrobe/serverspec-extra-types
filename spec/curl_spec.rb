@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
-
-context "Curl Matchers" do
+context 'Curl Matchers' do
   include WebserverHelper
   before(:all) do
     start_webserver

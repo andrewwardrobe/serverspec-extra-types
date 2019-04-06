@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples 'HTTP::2XX' do
   describe curl('http://localhost:18754/200') do
     it { should respond_with_200 }
@@ -58,6 +60,5 @@ shared_examples 'HTTP::2XX' do
     it { should respond_with_IM_USED }
     it { should respond_with_im_used }
     it { should be_im_used }
- end
+  end
 end
-

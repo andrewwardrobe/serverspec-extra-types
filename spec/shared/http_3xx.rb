@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples 'HTTP::3XX' do
   describe curl('http://localhost:18754/300') do
     it { should respond_with_300 }
@@ -46,6 +48,5 @@ shared_examples 'HTTP::3XX' do
     it { should respond_with_PERMANENT_REDIRECT }
     it { should respond_with_permanent_redirect }
     it { should be_permanent_redirect }
- end
+  end
 end
-

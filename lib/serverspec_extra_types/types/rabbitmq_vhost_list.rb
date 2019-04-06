@@ -9,7 +9,7 @@ module Serverspec::Type
     end
 
     def to_s
-      "RabbitMQ VHosts List"
+      'RabbitMQ VHosts List'
     end
 
     def url

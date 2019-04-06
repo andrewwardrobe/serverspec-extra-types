@@ -44,5 +44,7 @@ module Serverspec::Type
       command = curl_command
       @get_inspection ||= @runner.run_command(command)
     end
+    # rubocop:enable Naming/AccessorMethodName
+
   end
 end

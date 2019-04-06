@@ -118,9 +118,11 @@ module Serverspec::Type
 
     private
 
+    # rubocop:disable Naming/AccessorMethodName
     def get_inspection
       @containers ||= @name.include?('=') ? @runner.run_command("docker ps -qa -f #{@name}").stdout : @name
       @get_inspection ||= @runner.run_command("docker inspect #{@containers}")
     end
+    # rubocop:enable Naming/AccessorMethodName
   end
 end

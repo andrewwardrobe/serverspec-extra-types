@@ -39,7 +39,7 @@ RSpec.context 'RabbitMQ Matchers' do
     it { should configure_queue('MyVhost', 'Q1') }
   end
 
-  after(:all){
+  after(:all) do
     @rabbitMQ.stop_rabbitmq_container
-  }
+  end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'socket'
 
 module NetworkHelper
@@ -17,7 +19,6 @@ module NetworkHelper
     str.match(/([0-9]{1,3}\.){3}([0-9]{1,3}){1}/).to_s
   end
 
-
   def first_two(str)
     str.match(/([0-9]{1,3})\.([0-9]{1,3})/).to_s
   end
@@ -27,7 +28,8 @@ module NetworkHelper
   end
 
   def local_ip
-    orig, Socket.do_not_reverse_lookup = Socket.do_not_reverse_lookup, true  # turn off reverse DNS resolution temporarily
+    orig = Socket.do_not_reverse_lookup
+    Socket.do_not_reverse_lookup = true # turn off reverse DNS resolution temporarily
 
     UDPSocket.open do |s|
       s.connect default_gateway, 1

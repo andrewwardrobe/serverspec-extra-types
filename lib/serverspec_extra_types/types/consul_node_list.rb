@@ -20,7 +20,7 @@ module Serverspec::Type
     end
 
     def nodes
-      inspection.map { |node| node['Node']}
+      inspection.map { |node| node['Node'] }
     end
 
     def inspection

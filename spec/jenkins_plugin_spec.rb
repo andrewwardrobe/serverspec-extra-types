@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 Rspec.context 'Jenkins Plugin' do
@@ -9,7 +11,7 @@ Rspec.context 'Jenkins Plugin' do
 
   describe jenkins_plugin('ssh-slaves') do
     it { should exist }
-    it { should have_version '1.29.4'}
+    it { should have_version '1.29.4' }
     # Supports be_installed from serverspec
     it { should be_installed }
     # and with_version

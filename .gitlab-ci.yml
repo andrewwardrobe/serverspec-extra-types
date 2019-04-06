@@ -2,13 +2,14 @@ before_script:
 
 docker_sevice: &container_config
   image: docker:stable
-  variables:
+  variables: &task_variables
     DOCKER_DRIVER: overlay2
     SERVERSPEC_TARGET: service
     RAKE_TARGET: serverspec:${SERVERSPEC_TARGET}
   services:
     - docker:stable-dind
   script:
+    - ip addr
     - >
       apk --update add --virtual build-dependencies build-base ruby ruby-rdoc ruby-dev ruby-irb postgresql-dev ruby-etc
       libc-dev zlib-dev linux-headers git ruby-bigdecimal ruby-io-console libstdc++ tzdata postgresql-client
@@ -16,3 +17,10 @@ docker_sevice: &container_config
     - gem install bundle
     - bundle install
     - bundle exec rake ${RAKE_TARGET}
+
+
+consul:
+  <<: *container_config
+  variables:
+    <<: *task_variables
+    SERVERSPEC_TARGET: consul

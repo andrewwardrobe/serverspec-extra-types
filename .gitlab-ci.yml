@@ -96,3 +96,12 @@ jenkins_plugin:
   services:
     - name: docker:stable-dind
       alias: localhost
+
+jenkins_credential:
+  <<: *container_config
+  variables:
+    <<: *task_variables
+    SERVERSPEC_TARGET: jenkins_credential
+  services:
+    - name: docker:stable-dind
+      alias: localhost

@@ -49,6 +49,103 @@ module JenkinsHelper
     errCode
   end
 
+  def create_user_pass_credential(id, username, password, description, scope = 'GLOBAL')
+    body = {"" => "0",
+      "credentials" => {
+        "scope" => scope,
+        "id" => id,
+        "username" => username,
+        "password" => password,
+        "description" => description,
+        "$class" => "com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl"
+      }
+    }
+    begin
+    RestClient.post('http://localhost:38080/credentials/store/system/domain/_/createCredentials', "json=#{body.to_json}")
+    rescue RestClient::Found
+
+    end
+  end
+
+  def create_private_key_credential(id, username, sshkey, passphrase, description, scope = 'GLOBAL')
+    keySource = {
+      "$class" => 'com.cloudbees.jenkins.plugins.sshcredentials.impl.BasicSSHUserPrivateKey$DirectEntryPrivateKeySource',
+      "privateKey" => sshkey
+    }
+    body = {"" => "0",
+      "credentials" => {
+        "scope" => scope,
+        "id" => id,
+        "username" => username,
+        "passphrase" => passphrase,
+        "description" => description,
+        "privateKeySource" => keySource,
+        "$class" => "com.cloudbees.jenkins.plugins.sshcredentials.impl.BasicSSHUserPrivateKey"
+      }
+    }
+    begin
+    RestClient.post('http://localhost:38080/credentials/store/system/domain/_/createCredentials', "json=#{body.to_json}")
+    rescue RestClient::Found
+
+    end
+  end
+
+  def create_gitlab_credential(id, apiToken, description, scope = 'GLOBAL')
+    body = {"" => "0",
+            "credentials" => {
+                "scope" => scope,
+                "id" => id,
+                "apiToken" => apiToken,
+                "description" => description,
+                "$class" => "com.dabsquared.gitlabjenkins.connection.GitLabApiTokenImpl"
+            }
+    }
+    begin
+      puts body.to_json
+      RestClient.post('http://localhost:38080/credentials/store/system/domain/_/createCredentials', "json=#{body.to_json}")
+    rescue RestClient::Found
+    rescue RestClient::InternalServerError => ise
+      puts "Unable to create gitlab credential: #{ise.message}"
+    end
+  end
+
+  def create_string_credential(id, secret, description, scope = 'GLOBAL')
+    body = {"" => "0",
+            "credentials" => {
+                "scope" => scope,
+                "id" => id,
+                "secret" => secret,
+                "description" => description,
+                "$class" => "org.jenkinsci.plugins.plaincredentials.impl.StringCredentialsImpl"
+            }
+    }
+    begin
+      RestClient.post('http://localhost:38080/credentials/store/system/domain/_/createCredentials', "json=#{body.to_json}")
+    rescue RestClient::Found
+    rescue RestClient::Found
+
+    end
+  end
+
+  def create_aws_credential(id, accessKey, secretKey, description, scope = 'GLOBAL', iamRoleArn = '', iamMfaSerialNumber = '')
+    body = {"" => "0",
+            "credentials" => {
+                "scope" => scope,
+                "id" => id,
+                "accessKey" => accessKey,
+                "secretKey" => secretKey,
+                "iamRoleArn" => iamRoleArn,
+                "iamMfaSerialNumber" => iamMfaSerialNumber,
+                "description" => description,
+                "$class" => "com.cloudbees.jenkins.plugins.awscredentials.AWSCredentialsImpl"
+            }
+    }
+    begin
+      RestClient.post('http://localhost:38080/credentials/store/system/domain/_/createCredentials', "json=#{body.to_json}")
+    rescue RestClient::Found
+    end
+  end
+
   private
 
   def wait_for_plugin(pluginName, timeout = 30)

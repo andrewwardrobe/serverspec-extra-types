@@ -9,33 +9,8 @@ RSpec.context 'Docker Service' do
     attach_swarm
   end
 
-  describe command('docker node ls') do
-    it '' do
-      puts subject.stdout
-      puts @swarm.node_hash.keys[0]
-    end
-  end
-  describe command('docker node ls --format "{{ .Hostname }}"') do
-    it '' do
-      puts subject.stdout
-      puts @swarm.node_hash.keys[0]
-    end
-  end
-
-  describe command('hostname -A') do
-    it '' do
-      puts subject.stdout
-      puts @swarm.node_hash.keys[0]
-    end
-  end
-  describe command('docker ps') do
-    it '' do
-      puts subject.stdout
-      puts @swarm.node_hash.keys[0]
-    end
-  end
-
-  describe 'Docker Node' do
+  describe 'Docker Node test_node' do
+    # Have to set subject like this as it is not known before the describe starts
     let(:subject) { docker_node(`docker node ls --format '{{ .Hostname }}'`.chomp) }
     it { should exist }
     it { should be_a_manager }
@@ -46,6 +21,6 @@ RSpec.context 'Docker Service' do
   end
 
   after(:all) do
-    #detach_swarm
+    detach_swarm
   end
 end

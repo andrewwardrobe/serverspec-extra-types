@@ -14,6 +14,11 @@ Rspec.context 'Jenkins Plugin' do
       puts subject.stdout
     end
   end
+  describe command('curl -s http://docker:38080') do
+    it '' do
+      puts subject.stdout
+    end
+  end
   describe command('curl -s http://localhost:38080') do
     it '' do
       puts subject.stdout

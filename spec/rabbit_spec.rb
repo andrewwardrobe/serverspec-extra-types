@@ -3,19 +3,6 @@
 require 'spec_helper'
 require 'rest-client'
 
-RSpec.context 'pre tests' do
-  describe command('netstat -tunapl') do
-    it '' do
-      puts subject.stdout
-    end
-  end
-  describe command('docker ps') do
-    it '' do
-      puts subject.stdout
-    end
-  end
-
-end
 RSpec.context 'RabbitMQ Matchers' do
   before(:all) do
     system('docker ps')
@@ -28,11 +15,6 @@ RSpec.context 'RabbitMQ Matchers' do
     @rabbitMQ.create_permission('MyVhost', 'MyUser', '.*', '.*', '.*')
   end
 
-  describe command('curl http://docker:15672') do
-    it '' do
-      puts subject.stdout
-    end
-  end
   describe rabbitmq_vhost_policy('ha-all', 'MyVhost') do
     it { should exist }
     it { should have_ha_mode 'exactly' }

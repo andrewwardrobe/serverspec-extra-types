@@ -41,7 +41,7 @@ class RabbitMQHelper
     )
     @rabbitmq_container.start
     @rabbitmq_id = @rabbitmq_container.id[0..10]
-    sleep(10)
+    sleep(60)
   end
 
   def stop_rabbitmq_container

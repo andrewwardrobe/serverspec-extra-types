@@ -65,9 +65,19 @@ module JenkinsHelper
       end
 
 
-
+      puts "Waiting for pluging to be come availible"
       sleep 0.1
       tries += 1
+    end
+  end
+    def wait_for_plugin(pluginName, timeout = 30)
+    tries = 0
+    while tries < timeout * 10
+      response = RestClient.get 'http://localhost:38080/pluginManager/api/json?depth=1'
+      data = JSON.parse(response.body)
+      break if data['plugins'].find {|plugin| plugin['shortName'] == pluginName}
+      sleep 0.1
+      tries = tries + 1
     end
   end
 end

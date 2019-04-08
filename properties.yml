@@ -29,8 +29,6 @@ targets:
   rabbitmq:
     backend: exec
     spec_type: rabbit
-    variables:
-      rabbitmq_url: http://docker:15672
 
   consul:
     backend: exec

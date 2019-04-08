@@ -8,7 +8,7 @@ RSpec.context 'Docker Service' do
     attach_swarm
   end
 
-  describe command('docker node ls') do
+  describe command('docker node ls --format "{{ .Hostname }}"') do
     it '' do
       puts subject.stdout
       puts @swarm.node_hash.keys[0]

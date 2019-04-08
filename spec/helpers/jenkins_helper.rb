@@ -26,7 +26,7 @@ module JenkinsHelper
     )
     @jenkins_container.start
     @jenkins_id = @jenkins_container.id[0..10]
-    sleep(10)
+    sleep(60)
   end
 
   def stop_jenkins_container

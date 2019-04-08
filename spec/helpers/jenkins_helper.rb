@@ -70,6 +70,7 @@ module JenkinsHelper
       tries += 1
     end
   end
+=begin
     def wait_for_plugin(pluginName, timeout = 30)
     tries = 0
     while tries < timeout * 10
@@ -80,4 +81,5 @@ module JenkinsHelper
       tries = tries + 1
     end
   end
+=end
 end

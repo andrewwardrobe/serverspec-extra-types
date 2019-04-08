@@ -93,3 +93,6 @@ jenkins_plugin:
   variables:
     <<: *task_variables
     SERVERSPEC_TARGET: jenkins_plugin
+  services:
+    - name: docker:stable-dind
+      alias: localhost

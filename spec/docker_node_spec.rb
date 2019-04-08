@@ -8,6 +8,12 @@ RSpec.context 'Docker Service' do
     attach_swarm
   end
 
+  describe command('docker node ls') do
+    it '' do
+      puts subject.stdout
+      puts @swarm.node_hash.keys[0]
+    end
+  end
   describe command('docker node ls --format "{{ .Hostname }}"') do
     it '' do
       puts subject.stdout
@@ -28,7 +34,7 @@ RSpec.context 'Docker Service' do
     end
   end
 
-  describe docker_node(`hostname -f`.chomp) do
+  describe docker_node(`docker node ls --format '{{ .Hostname }}'`.chomp) do
     it { should exist }
     it { should be_a_manager }
     it { should be_active }

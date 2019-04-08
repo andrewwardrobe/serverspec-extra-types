@@ -28,7 +28,7 @@ RSpec.context 'RabbitMQ Matchers' do
     @rabbitMQ.create_permission('MyVhost', 'MyUser', '.*', '.*', '.*')
   end
 
-  describe command('docker ps') do
+  describe command('curl http://docker:15672') do
     it '' do
       puts subject.stdout
     end

@@ -2,6 +2,7 @@
 
 require 'spec_helper'
 
+
 RSpec.context 'Docker Service' do
   include SwarmHelper
   before(:all) do
@@ -34,7 +35,8 @@ RSpec.context 'Docker Service' do
     end
   end
 
-  describe docker_node(`docker node ls --format '{{ .Hostname }}'`.chomp) do
+  describe 'Docker Node' do
+    let(:subject) { docker_node(`docker node ls --format '{{ .Hostname }}'`.chomp) }
     it { should exist }
     it { should be_a_manager }
     it { should be_active }
@@ -44,6 +46,6 @@ RSpec.context 'Docker Service' do
   end
 
   after(:all) do
-    detach_swarm
+    #detach_swarm
   end
 end

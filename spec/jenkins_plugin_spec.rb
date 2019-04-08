@@ -9,6 +9,8 @@ Rspec.context 'Jenkins Plugin' do
     install_jenkins_plugin('ssh-slaves', '1.29.4', 60)
   end
 
+=begin
+
   describe command('docker ps') do
     it '' do
       puts subject.stdout
@@ -24,7 +26,7 @@ Rspec.context 'Jenkins Plugin' do
       puts subject.stdout
     end
   end
-
+=end
   describe jenkins_plugin('ssh-slaves') do
     it { should exist }
     it { should have_version '1.29.4' }

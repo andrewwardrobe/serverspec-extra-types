@@ -15,6 +15,12 @@ RSpec.context 'Docker Service' do
     end
   end
 
+  describe command('hostname -A') do
+    it '' do
+      puts subject.stdout
+      puts @swarm.node_hash.keys[0]
+    end
+  end
   describe command('docker ps') do
     it '' do
       puts subject.stdout

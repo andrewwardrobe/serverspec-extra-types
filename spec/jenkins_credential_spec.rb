@@ -21,6 +21,7 @@ Rspec.context 'Jenkins Credentials' do
     it { should exist }
     it { should have_description 'Username and Password Credential' }
     it { should be_username_with_password }
+    it { should have_display_name 'test/****** (Username and Password Credential)'}
   end
 
   describe jenkins_credential('string') do
@@ -43,10 +44,11 @@ Rspec.context 'Jenkins Credentials' do
     it { should exist }
     it { should have_description 'private key' }
     it { should be_ssh_private_key }
+
   end
 
   after(:all) do
-    stop_jenkins_container
+    #stop_jenkins_container
   end
 end
 

@@ -728,10 +728,69 @@ end
 ```
 
 
-### jenkins_credential <a name="jenkins_credential" ></a>
+### jenkins_credential(credential_id) <a name="jenkins_credential" ></a>
 <sub><sup>Please note: This type requires curl to be installed on the target host</sup></sub>
+#### exists
+Verifies that the credential exists
+```ruby
+describe jenkins_credential('someCredential') do
+  it { should exist }
+end
+```
+#### have_description(description)
+Checks if the credential description matches the specified text
+```ruby
+describe jenkins_credential('someCredential') do
+  it { should have_description 'Username and Password Credential' }
+end
+```
+#### have_display_name(text)
+Checks if the display name matches the specified text
+```ruby
+describe jenkins_credential('someCredential') do
+  it { should have_display_name 'test/****** (Username and Password Credential)'}
+end
+```
+#### be_username_with_password
+Checks if credential is a username and password
+```ruby
+describe jenkins_credential('someCredential') do
+  it { should be_username_with_password }
+end
+```
 
-_TODO_
+#### be_secret_text
+Checks if credential is a secret string
+```ruby
+describe jenkins_credential('someCredential') do
+  it { should be_secret_text }
+end
+```
+#### be_ssh_private_key
+Checks if credential is an ssh private key
+```ruby
+describe jenkins_credential('someCredential') do
+  it { should be_ssh_private_key }
+end
+```
+
+#### be_aws_credential
+Checks if credential is an aws access key/ secret tken pair 
+```ruby
+describe jenkins_credential('someCredential') do
+  it { should be_aws_credential }
+end
+```
+
+#### be_gitlab_api_token
+Checks if credential is a gitlab api token
+```ruby
+describe jenkins_credential('someCredential') do
+  it { should be_gitlab_api_token }
+end
+```
+
+
 <sub><sup>Supports the same additional parameters as the curl matcher</sup></sub>
 ### jenkins_job <a name="jenkins_job" ></a>
 <sub><sup>Please note: This type requires curl to be installed on the target host</sup></sub>

@@ -54,8 +54,8 @@ module Serverspec::Type
       inspection['description'] == desc
     end
 
-    def has_display_text?(text)
-      inspection['displayText'] == text
+    def has_display_name?(text)
+      inspection['displayName'] == text
     end
 
     private

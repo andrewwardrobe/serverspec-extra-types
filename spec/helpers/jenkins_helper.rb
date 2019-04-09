@@ -101,7 +101,6 @@ module JenkinsHelper
             }
     }
     begin
-      puts body.to_json
       RestClient.post('http://localhost:38080/credentials/store/system/domain/_/createCredentials', "json=#{body.to_json}")
     rescue RestClient::Found
     rescue RestClient::InternalServerError => ise

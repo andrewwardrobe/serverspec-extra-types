@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
 RSpec::Matchers.define :be_allowed_to_run_command do |command|
   chain :as do |user|

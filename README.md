@@ -43,7 +43,7 @@ require 'serverspec-extra-types'
 [rabbitmq_node_list](#rabbitmq_node_list) | [rabbitmq_user_permission](#rabbitmq_user_permission) | 
 [rabbitmq_vhost_list](#rabbitmq_vhost_list) | [rabbitmq_vhost_policy](#rabbitmq_vhost_policy) | [sudo_user](#sudo_user)
 
-### curl <a name="curl" ></a>
+### curl(url, options = {}) <a name="curl" ></a>
 <sub><sup>Please note: This type requires curl to be installed on the target host</sup></sub>
 
 The curl resource allow for check against remote url. Addition parameters are avaliable to allow for insecure certifactes and follow redirects
@@ -579,7 +579,6 @@ Check if secret has a specific label
   end
 ```
 
-
 ### docker_service
 ##### exist
 Check if a service exists by name
@@ -792,10 +791,141 @@ end
 
 
 <sub><sup>Supports the same additional parameters as the curl matcher</sup></sub>
-### jenkins_job <a name="jenkins_job" ></a>
+### jenkins_job(jobname) <a name="jenkins_job" ></a>
 <sub><sup>Please note: This type requires curl to be installed on the target host</sup></sub>
 
-_TODO_
+#### exists
+Verifies that the job exists
+```ruby
+describe jenkins_job('someJob') do
+  it { should exist }
+end
+```
+
+#### have_name(name)
+Verifies that the job has the specified name
+```ruby
+describe jenkins_job('someJob') do
+  it { should have_name 'someJob' }
+end
+```
+
+#### have_display_name(displayName)
+Verifies that the job has the specified display name
+```ruby
+describe jenkins_job('someJob') do
+  it { should have_display_name 'Some Job' }
+end
+```
+
+#### have_full_display_name(displayName)
+Verifies that the job has the specified full display name
+```ruby
+describe jenkins_job('someJob') do
+  it { should have_full_display_name 'someJob' }
+end
+#Jobs in folders use a '»' symbol inbetween the foldername and job name 
+describe jenkins_job('someFolder/someJob') do
+  it { should have_full_display_name 'someFolder » someJob' }
+end
+```
+
+#### have_description(description)
+Verifies that the job has the specified display name
+```ruby
+describe jenkins_job('someJob') do
+  it { should have_description 'Some Job' }
+end
+```
+
+#### be_freestyle / be_freestyle_project
+Verifies that the job is a free style project
+```ruby
+describe jenkins_job('freestyle') do
+  it { should be_freestyle }
+  it { should be_freestyle_project }
+end
+```
+
+#### be_maven / be_maven_project
+Verifies that the job is a maven project
+```ruby
+describe jenkins_job('maven') do
+  it { should be_maven }
+  it { should be_maven_project }
+end
+```
+
+#### be_pipeline / be_pipeline_project
+Verifies that the job is a pipeline project
+```ruby
+describe jenkins_job('pipeleine') do
+  it { should be_pipeline }
+  it { should be_pipeline_project }
+end
+```
+
+#### be_multibranch / be_multibranch_project
+Verifies that the job is a multibranch project
+```ruby
+describe jenkins_job('multibranch') do
+  it { should be_multibranch }
+  it { should be_multibranch_project }
+end
+```
+
+#### be_folder / be_directory
+Verifies that the job is a folder
+```ruby
+describe jenkins_job('folder') do
+  it { should be_multibranch }
+  it { should be_multibranch_project }
+end
+```
+
+#### have_job_type(type) / have_project_type(type)
+Checks if the job has a particular type
+```ruby
+describe jenkins_job('folder') do
+  it { should have_job_type('org.jenkinsci.plugins.workflow.job.WorkflowJob') }
+  it { should have_project_type('org.jenkinsci.plugins.workflow.job.WorkflowJob') }
+end
+```
+
+#### have_job(job)
+Checks if the folder conatins the specified job
+```ruby
+describe jenkins_job('folder') do
+  it { should have_job 'job' }
+
+end
+```
+
+#### have_job_count(count)
+Checks if  the folder conatins the specified number of jobs
+```ruby
+describe jenkins_job('folder') do
+  it { should have_job_count 1 }
+end
+```
+
+#### have_empty_job_list
+Checks if the folder conatains no jobs
+```ruby
+describe jenkins_job('folder') do
+  it { should have_empty_job_list }
+end
+```
+
+##### Jobs inside folders
+Jobs inside folder can be acessed vi folderName/jobName (ie the job urls  without any '/jobs') for example
+```ruby
+describe jenkins_job('folder/job') do
+  it { should exist }
+end
+```
+<sub><sup>Supports the same additional parameters as the curl matcher</sup></sub>
+
 
 ### jenkins_plugin <a name="jenkins_plugin" ></a>
 <sub><sup>Please note: This type requires curl to be installed on the target host</sup></sub>

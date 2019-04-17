@@ -92,7 +92,7 @@ module Serverspec::Type
     end
 
     def has_job?(_job)
-      inspection['jobs'].find { |job| job['name'] == job }
+      inspection['jobs'].find { |job| job['name'] == _job }
     end
 
     def has_job_count?(count)

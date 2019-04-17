@@ -74,3 +74,9 @@ targets:
     spec_type: jenkins_credential
     variables:
       jenkins_url: http://localhost:38080
+
+  jenkins_job:
+    backend: exec
+    spec_type: jenkins_job
+    variables:
+      jenkins_url: http://localhost:38080

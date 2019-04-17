@@ -105,3 +105,13 @@ jenkins_credential:
   services:
     - name: docker:stable-dind
       alias: localhost
+
+
+jenkins_jobs:
+  <<: *container_config
+  variables:
+    <<: *task_variables
+    SERVERSPEC_TARGET: jenkins_job
+  services:
+    - name: docker:stable-dind
+      alias: localhost

@@ -6,6 +6,11 @@ require 'rest-client'
 require_relative './hash_helper'
 
 module JenkinsHelper
+
+  def jenkins_url
+    property[:variables][:jenkins_url] || 'http://localhost:8080'
+  end
+
   def default_options
     { 'name' => "jenkins_#{Time.now.to_i}",
       'Image' => 'jenkins/jenkins:lts',
@@ -37,7 +42,7 @@ module JenkinsHelper
   def install_jenkins_plugin(plugin, version = 'latest', timeout = 30)
     errCode = 0
     begin
-      response = RestClient.post'http://localhost:38080/pluginManager/installNecessaryPlugins',
+      response = RestClient.post "#{jenkins_url}/pluginManager/installNecessaryPlugins",
                                 "<jenkins><install plugin=\"#{plugin}@#{version}\" /></jenkins>"
     rescue RestClient::Found
       errCode = 200
@@ -61,7 +66,7 @@ module JenkinsHelper
       }
     }
     begin
-    RestClient.post('http://localhost:38080/credentials/store/system/domain/_/createCredentials', "json=#{body.to_json}")
+    RestClient.post("#{jenkins_url}/credentials/store/system/domain/_/createCredentials", "json=#{body.to_json}")
     rescue RestClient::Found
 
     end
@@ -84,7 +89,7 @@ module JenkinsHelper
       }
     }
     begin
-    RestClient.post('http://localhost:38080/credentials/store/system/domain/_/createCredentials', "json=#{body.to_json}")
+    RestClient.post("#{jenkins_url}/credentials/store/system/domain/_/createCredentials", "json=#{body.to_json}")
     rescue RestClient::Found
 
     end
@@ -101,7 +106,7 @@ module JenkinsHelper
             }
     }
     begin
-      RestClient.post('http://localhost:38080/credentials/store/system/domain/_/createCredentials', "json=#{body.to_json}")
+      RestClient.post("#{jenkins_url}/credentials/store/system/domain/_/createCredentials", "json=#{body.to_json}")
     rescue RestClient::Found
     rescue RestClient::InternalServerError => ise
       puts "Unable to create gitlab credential: #{ise.message}"
@@ -119,10 +124,8 @@ module JenkinsHelper
             }
     }
     begin
-      RestClient.post('http://localhost:38080/credentials/store/system/domain/_/createCredentials', "json=#{body.to_json}")
+      RestClient.post("#{jenkins_url}/credentials/store/system/domain/_/createCredentials", "json=#{body.to_json}")
     rescue RestClient::Found
-    rescue RestClient::Found
-
     end
   end
 
@@ -140,18 +143,25 @@ module JenkinsHelper
             }
     }
     begin
-      RestClient.post('http://localhost:38080/credentials/store/system/domain/_/createCredentials', "json=#{body.to_json}")
+      RestClient.post("#{jenkins_url}/credentials/store/system/domain/_/createCredentials", "json=#{body.to_json}")
     rescue RestClient::Found
     end
   end
 
+
+  def install_job_plugins
+    install_jenkins_plugin('cloudbees-folders')
+    install_jenkins_plugin('maven-plugin')
+    install_jenkins_plugin('pipeline')
+    install_jenkins_plugin('workflow-multibranch')
+  end
   private
 
   def wait_for_plugin(pluginName, timeout = 30)
     tries = 0
     while tries < timeout * 10
       begin
-      response = RestClient.get 'http://localhost:38080/pluginManager/api/json?depth=1'
+      response = RestClient.get "#{jenkins_url}/pluginManager/api/json?depth=1"
       data = JSON.parse(response.body)
       break if data['plugins'].find { |plugin| plugin['shortName'] == pluginName }
       rescue RestClient::Found

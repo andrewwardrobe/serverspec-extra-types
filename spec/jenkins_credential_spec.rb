@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+SimpleCov.command_name 'serverspec:jenkins_credential'
+
 
 Rspec.context 'Jenkins Credentials' do
   include JenkinsHelper,SshHelper

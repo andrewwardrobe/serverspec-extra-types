@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-
+SimpleCov.command_name 'serverspec:jenkins_plugin'
 Rspec.context 'Jenkins Plugin' do
   include JenkinsHelper
   before(:all) do

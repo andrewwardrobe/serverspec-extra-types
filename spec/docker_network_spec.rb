@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-
+SimpleCov.command_name 'serverspec:network'
 RSpec.context 'Docker Service' do
   include SwarmHelper
   before(:all) do

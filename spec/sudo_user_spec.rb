@@ -3,6 +3,8 @@
 require 'spec_helper'
 require 'serverspec_extra_types/types/sudo_user'
 
+SimpleCov.command_name 'serverspec:sudo_user'
+
 context 'sudo user type' do
   module Serverspec::Type
     class SudoUser

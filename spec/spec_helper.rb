@@ -1,10 +1,11 @@
 # frozen_string_literal: true
-
+require 'simplecov'
 require 'bundler/setup'
 require 'serverspec_extra_types'
 require 'serverspec_launcher/spec_helper'
 
 require 'docker-swarm-sdk'
+
 
 Dir[File.dirname(__FILE__) + '/../spec/helpers/*.rb'].each do |file|
   require 'helpers/' + File.basename(file, File.extname(file))

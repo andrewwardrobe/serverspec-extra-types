@@ -2,8 +2,8 @@
 
 require 'spec_helper'
 
-
-RSpec.context 'Docker Service' do
+SimpleCov.command_name 'serverspec:node'
+RSpec.context 'Docker Node' do
   include SwarmHelper
   before(:all) do
     attach_swarm

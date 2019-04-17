@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+SimpleCov.command_name 'serverspec:sudo'
 
 context 'Sudo User matchers' do
   # The container for this is started up by serverspec_launcher see properties file in  project root

@@ -3,6 +3,8 @@
 require 'spec_helper'
 require 'base64'
 
+SimpleCov.command_name 'serverspec:config'
+
 RSpec.context 'Docker Config' do
   include SwarmHelper
   before(:all) do

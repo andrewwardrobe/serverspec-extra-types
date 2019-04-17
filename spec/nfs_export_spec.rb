@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+SimpleCov.command_name 'serverspec:nfs_export'
+
 
 context 'NFS Exports' do
   # The container for this is started up by serverspec_launcher see properties file in  project root

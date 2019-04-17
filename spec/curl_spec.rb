@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-
+SimpleCov.command_name 'serverspec:curl'
 context 'Curl Matchers' do
   include WebserverHelper
   before(:all) do

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+SimpleCov.command_name 'serverspec:container'
 
 RSpec.context 'Docker Container' do
   include ConsulHelper

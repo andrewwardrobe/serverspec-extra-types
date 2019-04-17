@@ -3,6 +3,8 @@
 require 'spec_helper'
 require 'rest-client'
 
+SimpleCov.command_name 'serverspec:rabbitmq'
+
 RSpec.context 'RabbitMQ Matchers' do
   before(:all) do
     @rabbitMQ = RabbitMQHelper.new

@@ -2,6 +2,7 @@
 
 require 'spec_helper'
 require 'docker'
+SimpleCov.command_name 'serverspec:consul'
 
 RSpec.context 'Consul' do
   include ConsulHelper

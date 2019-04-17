@@ -36,6 +36,8 @@ Rspec.context 'Jenkins Job' do
     it { should exist }
     it { should be_pipeline }
     it { should be_pipeline_project }
+    it { should have_job_type('org.jenkinsci.plugins.workflow.job.WorkflowJob') }
+    it { should have_project_type('org.jenkinsci.plugins.workflow.job.WorkflowJob') }
   end
 
   describe jenkins_job('multibranch') do
@@ -61,8 +63,7 @@ Rspec.context 'Jenkins Job' do
     it { should exist }
     it { should be_freestyle }
     it { should be_freestyle_project }
-    it { should have_job_type('org.jenkinsci.plugins.workflow.job.WorkflowJob') }
-    it { should have_project_type('org.jenkinsci.plugins.workflow.job.WorkflowJob') }
+
   end
 
   describe jenkins_job('folder/DevOps') do

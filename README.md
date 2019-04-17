@@ -886,7 +886,7 @@ end
 #### have_job_type(type) / have_project_type(type)
 Checks if the job has a particular type
 ```ruby
-describe jenkins_job('folder') do
+describe jenkins_job('pipeline') do
   it { should have_job_type('org.jenkinsci.plugins.workflow.job.WorkflowJob') }
   it { should have_project_type('org.jenkinsci.plugins.workflow.job.WorkflowJob') }
 end

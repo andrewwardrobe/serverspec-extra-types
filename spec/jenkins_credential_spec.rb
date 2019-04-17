@@ -50,7 +50,7 @@ Rspec.context 'Jenkins Credentials' do
   end
 
   after(:all) do
-    #stop_jenkins_container
+    stop_jenkins_container
   end
 end
 

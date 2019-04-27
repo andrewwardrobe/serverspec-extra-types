@@ -14,7 +14,7 @@ Style/Documentation:
   Enabled: false
 
 Metrics/LineLength:
-  Max: 140
+  Max: 160
 
 
 Metrics/MethodLength:

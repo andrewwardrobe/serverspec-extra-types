@@ -6,6 +6,7 @@ RSpec::Matchers.define :be_allowed_to_run_anything do
   end
   chain :as_anybody do
     @user = 'ALL'
+    @anybody = true
   end
   chain :without_password do
     @checkpw = true
@@ -25,16 +26,16 @@ RSpec::Matchers.define :be_allowed_to_run_anything do
     msg = if @user
             "expected to be able to run anything as #{@user} got #{actual.permission('ALL')[:user]}"
           else
-            "expected anything} to be in #{actual.permissions.map { |x| x[:command] }}"
+            "expected 'ALL' to be in #{actual.permissions.map { |x| x[:command] }}"
     end
-    msg << %( without a password ) if @checkpw
+    msg << %( without a password) if @checkpw
     msg
   end
 
   description do
     msg = 'be allowed to run anything'
-    msg << %( as #{@user}) if @user
-    msg << %( without a password ) if @checkpw
+    msg << %( as #{@anybody ? 'anybody' : "'#{@user}'"}) if @user
+    msg << %( without a password) if @checkpw
     msg
   end
 end

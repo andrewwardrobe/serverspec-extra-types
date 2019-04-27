@@ -2,7 +2,7 @@
 
 options:
   # Stop the test on the first failure (default: true)
-  fail_on_err: true
+  fail_on_err: false
   # Specify output format defaults is docs_screen multiple formatters can be specified
   formatters:
      - tick
@@ -51,6 +51,11 @@ targets:
     backend: docker
     docker_build_dir: spec/resources/dockerfiles/sudo
     spec_type: sudo
+
+  sudo_matchers:
+    backend: docker
+    docker_build_dir: spec/resources/dockerfiles/sudo
+    spec_type: matchers/sudo_matcher
 
 
   sudo_user:

@@ -83,10 +83,10 @@ module Serverspec::Type
 
     def get_sudo_perms(output)
       matches = /Matching Defaults entries for #{@user} on .*\n(.*)\n/.match output
-      defaults = matches[1].split(', ').map(&:strip)
+      defaults = matches ? matches[1].split(', ').map(&:strip) : {}
       matches = /User #{@user} may run the following commands on .*\n((\W.*\n)*)/.match output
 
-      permissions = matches[1].split("\n").map { |x| chunk_permission(x.strip) }
+      permissions = matches ? matches[1].split("\n").map { |x| chunk_permission(x.strip) } : {}
       { defaults: defaults, permissions: permissions }
     end
   end

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 SimpleCov.command_name 'serverspec:jenkins_plugin'
-Rspec.context 'Jenkins Plugin' do
+RSpec.context 'Jenkins Plugin' do
   include JenkinsHelper
   before(:all) do
     start_jenkins_container

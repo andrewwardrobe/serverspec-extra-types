@@ -4,13 +4,15 @@ require 'spec_helper'
 SimpleCov.command_name 'serverspec:jenkins_credential'
 
 
-Rspec.context 'Jenkins Credentials' do
+RSpec.context 'Jenkins Credentials' do
   include JenkinsHelper,SshHelper
   before(:all) do
     start_jenkins_container
     install_jenkins_plugin('ssh-credentials')
     install_jenkins_plugin('plain-credentials')
     install_jenkins_plugin('aws-credentials')
+    install_jenkins_plugin('gitlab-plugin')
+    restart_jenkins_container
     install_jenkins_plugin('gitlab-plugin')
     create_user_pass_credential('userpass', 'test', 'password', 'Username and Password Credential')
     create_string_credential('string', 'password', 'String Credential')

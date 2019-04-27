@@ -31,12 +31,17 @@ module JenkinsHelper
     )
     @jenkins_container.start
     @jenkins_id = @jenkins_container.id[0..10]
-    sleep(60)
+    sleep(opts[:timeout] || 60)
   end
 
   def stop_jenkins_container
     @jenkins_container.stop
     @jenkins_container.delete
+  end
+
+  def restart_jenkins_container(opts = {})
+    @jenkins_container.restart
+    sleep(opts[:timeout] || 30)
   end
 
   def install_jenkins_plugin(plugin, version = 'latest', timeout = 30)

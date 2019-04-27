@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 SimpleCov.command_name 'serverspec:jenkins_job'
-Rspec.context 'Jenkins Job' do
+RSpec.context 'Jenkins Job' do
   include JenkinsHelper, JenkinsJobHelper
 
   before(:all) do

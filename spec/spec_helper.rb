@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'simplecov'
 require 'bundler/setup'
-require 'serverspec_extra_types'
+require 'serverspec-extra-types'
 require 'serverspec_launcher/spec_helper'
 require 'rspec/matchers/fail_matchers'
 require 'docker-swarm-sdk'

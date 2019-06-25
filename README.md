@@ -1122,19 +1122,15 @@ end
 Ensures the user can run a command
 ```ruby
 describe sudo_user('someuser') do
-  it { should be_allowed_run_anything }
-  # Without password
-  it { should be_allowed_run_anything.without_a_password }
-  #As a particular user
-  it { should be_allowed_run_anything.as('someotheruser') }
-  #As a particular user with out a password
-  it { should be_allowed_run_anything.as('someotheruser').without_a_password  }
-  #As any user
-  it { should be_allowed_run_anything.as_anybody }
-  #As Any user without  a password
-  it { should be_allowed_run_anything.as_anybody.without_password }
+  it { should be_allowed_to_run_command('/usr/bin/cat /var/log/messages') }
+  it { should be_allowed_to_run_command('/usr/bin/cat /var/log/messages').as('user6') }
+  it { should be_allowed_to_run_command('/usr/bin/cat /var/log/messages').as('user6').without_password }
+  it { should be_allowed_to_run_command('/usr/bin/cat /var/log/secure').without_password }
+  it { should be_allowed_to_run_command('/usr/bin/cat /tmp/logs').as_anybody }
+  it { should be_allowed_to_run_command('/usr/bin/cat /tmp/logs').as_anybody.without_password }
 end
 ```
+
 ##### be_allowed_to_run_anything
 Ensures the user can run a anything
 ```ruby

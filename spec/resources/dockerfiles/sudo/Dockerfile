@@ -29,6 +29,7 @@ RUN echo "Cmnd_Alias LEEK = /usr/bin/cat, /usr/bin/env, /usr/bin/java, " \
         "/usr/bin/javac, /usr/bin/grep, /usr/bin/awk, /usr/bin/ifconfig, "\
         "/usr/sbin/passwd, /usr/sbin/useradd, /usr/sbin/userdel, /usr/sbin/usermod, " \
         "/sbin/poweroff, /sbin/reboot, /sbin/halt, /usr/sbin/lpc, /usr/sbin/lprm, " \
+        "/usr/bin/tail -f /var/log/messsages"\
         "/usr/bin/dmesg, /usr/sbin/ping, /usr/bin/vim, /bin/nano" >> /etc/sudoers
 RUN echo 'user7 ALL=(ALL) NOPASSWD: LEEK' >> /etc/sudoers
 

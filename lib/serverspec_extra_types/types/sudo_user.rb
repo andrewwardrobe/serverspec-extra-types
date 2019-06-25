@@ -74,10 +74,12 @@ module Serverspec::Type
       end
       if /NOPASSWD:/.match? perm
         chunks[:nopasswd] = true
-        chunks[:command] = parts[2..-1].join(' ').split(',').map(&:strip)
+        commands = parts[2..-1].join(' ').split(',').map(&:strip)
+        chunks[:command] = commands.length > 1 ? commands : commands[0]
       else
         chunks[:nopasswd] = false
-        chunks[:command] = parts[1..-1].join(' ').split(',').map(&:strip)
+        commands = parts[1..-1].join(' ').split(',').map(&:strip)
+        chunks[:command] = chunks[:command] = commands.length > 1 ? commands : commands[0]
       end
     end
 

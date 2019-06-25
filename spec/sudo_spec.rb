@@ -34,5 +34,7 @@ context 'Sudo User matchers' do
   describe sudo_user('user7') do
     it { should exist }
     it { should be_allowed_to_run_command('/usr/bin/java') }
+    it { should_not be_allowed_to_run_command('/var/log/messsages') } #Check for returning true on a partial match
+    it { puts subject.permission('/usr/bin/java') }
   end
 end

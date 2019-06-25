@@ -41,3 +41,6 @@ require 'serverspec_extra_types/matchers/url_matchers'
 #--- sudo matchers
 require 'serverspec_extra_types/matchers/allowed_to_run_command'
 require 'serverspec_extra_types/matchers/allowed_to_run_anything'
+
+
+require 'serverspec_extra_types/matchers/have_version'

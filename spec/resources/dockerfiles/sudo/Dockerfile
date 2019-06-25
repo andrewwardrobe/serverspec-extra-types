@@ -26,6 +26,6 @@ RUN echo '%group2 ALL=(user6) /usr/bin/cat /var/log/secure' >> /etc/sudoers
 RUN echo '%group3 ALL=(ALL) NOPASSWD: /usr/bin/cat /var/log/messages' >> /etc/sudoers
 RUN echo '%group4 ALL=(ALL) /usr/bin/cat /tmp/logs' >> /etc/sudoers
 RUN echo "Cmnd_Alias LEEK = /usr/bin/cat, /usr/bin/env, /usr/bin/java, /usr/bin/javac, /usr/bin/grep, /usr/bin/awk, /usr/bin/ifconfig, /usr/bin/dmesg, /usr/sbin/ping" >> /etc/sudoers
-RUN echo 'user7 ALL=(ALL) NOPASSWD: LEEK /tmp/logs' >> /etc/sudoers
+RUN echo 'user7 ALL=(ALL) NOPASSWD: LEEK' >> /etc/sudoers
 
 CMD /bin/bash && tail -f /dev/null

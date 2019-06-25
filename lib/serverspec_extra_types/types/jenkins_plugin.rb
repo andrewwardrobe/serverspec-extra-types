@@ -33,7 +33,11 @@ module Serverspec::Type
     end
 
     def has_version?(version)
-      inspection['version'].to_s == version.to_s
+      self.version == version.to_s
+    end
+
+    def version
+      inspection['version'].to_s
     end
 
     def length

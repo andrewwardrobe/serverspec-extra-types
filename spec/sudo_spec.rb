@@ -32,7 +32,7 @@ context 'Sudo User matchers' do
   end
 
   describe sudo_user('user7') do
-    it { should_not exist }
+    it { should exist }
     it { should be_allowed_to_run_command('/usr/bin/java') }
   end
 end

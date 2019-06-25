@@ -34,7 +34,7 @@ module Serverspec::Type
     end
 
     def permission(command)
-      permissions.find { |x| x[:command] == command }
+      permissions.find { |x| x[:command].include?(command) }
     end
 
     def permissions
@@ -74,10 +74,10 @@ module Serverspec::Type
       end
       if /NOPASSWD:/.match? perm
         chunks[:nopasswd] = true
-        chunks[:command] = parts[2..-1].join(' ')
+        chunks[:command] = parts[2..-1].join(' ').split(',').map(&:strip)
       else
         chunks[:nopasswd] = false
-        chunks[:command] = parts[1..-1].join(' ')
+        chunks[:command] = parts[1..-1].join(' ').split(',').map(&:strip)
       end
     end
 

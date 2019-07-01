@@ -19,7 +19,7 @@ RSpec::Matchers.define :be_allowed_to_run_command do |command|
     elsif @anybody
       (actual.allowed_to_run_command?(command, 'ALL', @checkpw) || actual.allowed_to_run_command?(command, 'ALL:ALL', @checkpw))
     else
-      actual.allowed_to_run_command?(command, @checkpw)
+      actual.allowed_to_run_command?(command, false, @checkpw)
     end
   end
 

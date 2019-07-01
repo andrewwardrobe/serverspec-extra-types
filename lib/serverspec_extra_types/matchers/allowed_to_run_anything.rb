@@ -18,7 +18,7 @@ RSpec::Matchers.define :be_allowed_to_run_anything do
     if @user
       actual.allowed_to_run_command?('ALL', @user, @checkpw)
     else
-      actual.allowed_to_run_command?('ALL', @checkpw)
+      actual.allowed_to_run_command?('ALL', false, @checkpw)
     end
   end
 

@@ -983,7 +983,6 @@ describe nfs_export('/var/nfsroot') do
 end
 ```
 
-
 ### rabbitmq_node_list <a name="rabbitmq_node_list" ></a>
 <sub><sup>Please note: This type requires curl to be installed on the target host</sup></sub>
 #### have_count
@@ -1148,6 +1147,76 @@ describe sudo_user('someuser') do
   it { should be_allowed_run_anything.as_anybody.without_password }
 end
 ```
+
+### unix_pam(pamfile, dir='/etc/pam.d' ) <a name="unix_pam" ></a>
+Provides a type and matchers for checking UNIX plugable authenticaton modules (PAM)
+#### exist
+Checks that the pamfile exists in the given directory (default = /etc/pam.d)
+```ruby
+describe unix_pam('su') do
+ it { should exist }
+end  
+```
+
+#### have_authentication(module)/have_auth(module)
+Checks that the pamfile has a 'auth' configuration item using the given module
+```ruby
+describe unix_pam('su') do
+ it { should have_auth 'pam_rootok.so'}
+end
+```
+This match also support the following matcher chains:
+```ruby
+describe unix_pam('su') do
+ ## Control Flag Chain matchers
+ # Check if module is a required module
+ it { should have_auth('pam_rootok.so').required }
+  # Check if module is a requisite module
+ it { should have_auth('pam_rootok.so').requisite }
+  # Check if module is a sufficient module
+ it { should have_auth('pam_rootok.so').sufficient }
+ # Check if module is a optional module
+ it { should have_auth('pam_rootok.so').optional }
+ #Check for a particular control flag (with_control and with_flag are provided as aliases)
+ it { should have_auth('pam_unix.so').with_control_flag('[success=1 default=ignore]') } 
+ 
+ ## Argument chain matchers
+ #Single arg
+ it { should have_auth('pam_unix.so').with_arg('nullok_secure') }
+ it { should have_auth('pam_unix.so').with_argument('nullok_secure') }
+ #Multiple args
+ it { should have_auth('pam_wheel.so').with_args(['deny', 'group=nosu']) }
+ it { should have_auth('pam_wheel.so').with_arguments(['deny', 'group=nosu']) }
+end  
+```
+
+#### have_session(module)
+Checks that the pamfile has a 'session' configuration item using the given module
+```ruby
+describe unix_pam('su') do
+ it { should have_session 'pam_env.so'}
+end  
+```
+This matcher supports all the chains of the have_auth matcher (see above)
+
+#### have_account(module)
+Checks that the pamfile has a 'account' configuration item using the given module
+```ruby
+describe unix_pam('common-account') do
+ it { should have_account 'pam_deny.so'}
+end  
+```
+This matcher supports all the chains of the have_auth matcher (see above)
+
+#### have_password(module)
+Checks that the pamfile has a 'account' configuration item using the given module
+```ruby
+describe unix_pam('common-password') do
+ it { should have_password 'pam_deny.so'}
+end  
+```
+This matcher supports all the chains of the have_auth matcher (see above)
+
 
 
 ## Development

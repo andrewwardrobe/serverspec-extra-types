@@ -90,3 +90,7 @@ targets:
     spec_type: jenkins_job
     variables:
       jenkins_url: http://localhost:38080
+
+  k8s_node:
+    backend: exec
+    spec_type: kubernetes_node

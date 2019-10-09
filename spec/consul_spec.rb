@@ -52,6 +52,6 @@ RSpec.context 'Consul' do
   end
 
   after(:all) do
-    stop_consul_container
+   # stop_consul_container
   end
 end

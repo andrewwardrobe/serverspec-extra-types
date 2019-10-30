@@ -7,15 +7,11 @@ RSpec.context 'Kubernetes Node' do
 
   end
 
-  describe kubernetes_node('testenv01') do
+  describe nexus_repo('npm-group', nexus_root: 'http://192.168.2.6:30081') do
     # Have to set subject like this as it is not known before the describe starts
     it { should exist }
-    it { should have_name 'testenv01' }
-    it '' do
-      puts subject.inspection.to_yaml
-    end
-
-
+    it { should have_name 'npm-group' }
+    it { should be_an_npm_repo }
   end
 
   after(:all) do

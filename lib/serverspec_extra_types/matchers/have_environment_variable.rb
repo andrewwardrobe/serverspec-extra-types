@@ -4,8 +4,18 @@ RSpec::Matchers.define :have_environment_variable do |regex|
   chain :with_value do |value|
     @value = value
   end
+
+  chain :with_value_from do |from, opts|
+    @from = from
+    @opts = opts
+  end
+
   match do |actual|
-    actual.has_environment_variable? regex, @value
+    if @from
+      actual.has_environment_variable_from? regex, @from, @opts
+    else
+      actual.has_environment_variable? regex, @value
+    end
   end
   description do
     message = "have an environment variable #{regex}"

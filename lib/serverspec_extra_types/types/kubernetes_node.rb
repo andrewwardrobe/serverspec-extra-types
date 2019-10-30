@@ -8,13 +8,6 @@ module Serverspec::Type
       @name = name
     end
 
-    def name
-      inspection['metadata']['name']
-    end
-
-    def has_name?(name)
-      self.name == name
-    end
 
     def exist?
       get_inspection.success?

@@ -25,8 +25,42 @@ module Serverspec::Type
     end
 
     def inspection
+      begin
       @inspection ||= ::MultiJson.load(get_inspection.stdout)
+      rescue MultiJson::ParseError => ex
+        @inspection ||= {}
+      end
     end
+
+    def name
+      inspection.dig('metadata', 'name')
+    end
+
+    def has_name?(name)
+      self.name == name
+    end
+
+    def namespace
+      inspection.dig('metadata','namespace')
+    end
+
+    def has_namespace?(name)
+      self.namespace == name
+    end
+
+    def labels
+      inspection.dig('metadata', 'labels')
+    end
+
+    def has_label?(name, value = nil)
+      if value
+        labels.find {|label, val| label == name && val == value}
+      else
+        labels.find {|label, val| label == name}
+      end
+
+    end
+
 
     private
 

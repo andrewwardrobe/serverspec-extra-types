@@ -7,14 +7,14 @@ RSpec.context 'Kubernetes Node' do
 
   end
 
-  describe kubernetes_node('testenv01') do
+  describe kubernetes_service('openldap') do
     # Have to set subject like this as it is not known before the describe starts
     it { should exist }
-    it { should have_name 'testenv01' }
-    it '' do
-      puts subject.inspection.to_yaml
-    end
-
+    it { should have_name 'openldap' }
+    it { should have_cluster_ip('10.100.67.172')}
+    it { should have_type 'ClusterIP' }
+    it { should be_cluster_ip }
+    it { should have_port 389}
 
   end
 

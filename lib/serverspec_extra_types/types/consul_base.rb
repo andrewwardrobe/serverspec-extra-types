@@ -28,8 +28,6 @@ module Serverspec::Type
     end
 
     def inspection
-      puts get_inspection.stdout
-      puts get_inspection.stderr
       @inspection ||= ::MultiJson.load(get_inspection.stdout)[0]
     end
 

@@ -94,3 +94,16 @@ targets:
   k8s_node:
     backend: exec
     spec_type: kubernetes_node
+
+  k8s_deployment:
+    backend: exec
+    spec_type: kubernetes_deployment
+
+
+  k8s_service:
+    backend: exec
+    spec_type: kubernetes_service
+
+  nexus_repo:
+    backend: exec
+    spec_type: nexus_repo

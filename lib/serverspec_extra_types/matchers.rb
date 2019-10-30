@@ -48,3 +48,6 @@ require 'serverspec_extra_types/matchers/have_auth'
 require 'serverspec_extra_types/matchers/have_session'
 require 'serverspec_extra_types/matchers/have_password'
 require 'serverspec_extra_types/matchers/have_account'
+
+
+require 'serverspec_extra_types/matchers/proxy'

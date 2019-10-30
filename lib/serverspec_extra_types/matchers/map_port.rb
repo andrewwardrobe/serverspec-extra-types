@@ -23,3 +23,25 @@ RSpec::Matchers.define :map_port do |host, container|
   chain :using_protocol, :protocol
   chain :with_mode, :mode
 end
+
+RSpec::Matchers.define :expose_port do |port|
+  @protocol ||= 'TCP'
+  match do |actual|
+    actual.has_port?(port, @name, @nodePort, @targetPort, @protocol)
+  end
+  description do
+    msg = "expose port #{port}"
+    msg << %( targeting to container port #{@targetPort}) if @targetPort
+    msg << %( available at node port  #{@nodePort}) if @nodePort
+    msg << %( using protocol  #{@protocol}) if @protocol
+    msg << %( with name "#{@name}" ) if @name
+    msg
+  end
+
+  chain :using_protocol, :protocol
+  chain :with_name, :name
+  chain :targeting, :targetPort
+  chain :at_node_port, :nodePort
+end
+
+
